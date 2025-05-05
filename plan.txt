@@ -1,4 +1,4 @@
-Todo app - MERN or PERN + Tailwind
+Todo app - MERN + Tailwind
  - logins an acc signups, wiht google acc
  - set priority levels
  - set deadlines, "sometime in this life" option
@@ -7,5 +7,4 @@ Todo app - MERN or PERN + Tailwind
  - sort by prio, deadlines, etc
  - Age counter "You are 20.10201 Years Old"
  - Message "You're only gettig older. Get it Done." "You're running out of time. Get it Done." "Tick Tock. Get it Done." "Do you plan on resting forever? Get it Done."
- - "Get What Done?" text for context on hero text, "What" is hyperlink: "Your groceries, your taxes, that marathon, that stinking pile of laundry, those dinner plans, that fishing trip with your dad, those unread emails, your half-finished book, that girl you like, your weekend project, your fitness routine, your budget spreadsheet, that brunch with your mom, your daily commute, those text replies, that job application, your side hustle, your plant that needs watering, your self-care Sunday, your hopes for next year, your playlist for today, and your groceries.
-Who cares? Just Get It Done."
+ - "Get What Done?" text for context on hero text, "What" is hyperlink: "Your taxes, your groceries, that stinking pile of laundry, those dinner plans, those unread emails, your half-finished book, that girl you like, your weekend project, your fitness routine, your budget spreadsheet, that brunch with your mom, that fishing trip with your dad, that marathon you want to run, that kickflip you want to land, those text messages you never got to, that job application that never replied, your side hustle, your plant that needs watering, your self-care Sunday, your hopes for next year, your playlist for today. Your life-long dreams, and taxes. Who cares? Just Get It Done."
