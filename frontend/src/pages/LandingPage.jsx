@@ -29,7 +29,7 @@ const LandingPage = () => {
         <div className="w-[65vw] h-[100vh] flex justify-center items-center" >
           <figure className="w-full h-full min-h-[50vh]">
 
-            <Canvas style={{ width: '100%', height: '100%' }} camera={{ position: [0, 0, 15], fov: 45 }}>
+            <Canvas style={{ width: '100%', height: '100%' }} camera={{ position: [0, 0, 10], fov: 2 }}>
 
               <directionalLight position={[5, 5, 5]} intensity={1} />
               <OrbitControls
