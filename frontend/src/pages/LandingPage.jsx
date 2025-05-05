@@ -1,5 +1,9 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { OrbitControls } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { NotepadModel } from "../assets/models/NotepadModel.jsx";
+import HeroLights from "../assets/models/HeroLights.jsx";
 
 const LandingPage = () => {
 
@@ -20,7 +24,38 @@ const LandingPage = () => {
   return (
     <section id="hero">
       <div className="fixed inset-0 bg-yellow-500 flex items-center justify-center">
-        <div className="w-[65vw] h-[100vh]" />
+
+        {/* LEFT: 3D model */}
+        <div className="w-[65vw] h-[100vh] flex justify-center items-center" >
+          <figure className="w-full h-full min-h-[50vh]">
+
+            <Canvas style={{ width: '100%', height: '100%' }} camera={{ position: [0, 0, 15], fov: 45 }}>
+
+              <directionalLight position={[5, 5, 5]} intensity={1} />
+              <OrbitControls
+                enablePan={true}
+              // minPolarAngle={Math.PI / 5}
+              // maxPolarAngle={Math.PI / 2}
+              />
+
+              {/* <mesh>
+                <boxGeometry args={[1, 1, 1]} />
+                <meshStandardMaterial color="teal" />
+              </mesh> */}
+
+              <mesh>
+                <NotepadModel />
+              </mesh>
+
+
+              <HeroLights />
+
+            </Canvas>
+
+          </figure>
+        </div>
+
+        {/* RIGHT: Hero Text and Sign In box */}
         <div className="w-[35vw] h-[100vh] bg-amber-600 " >
           <div className="flex flex-col justify-center items-center h-screen">
             <div className="text-9xl font-bold text-white select-none hero-text">
