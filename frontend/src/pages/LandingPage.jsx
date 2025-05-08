@@ -82,6 +82,9 @@ const LandingPage = () => {
                 <p className="text-sm text-center text-white select-none">
                   Don't have an account? <a href="#" className="underline text-blue-600">Sign up</a>
                 </p>
+                <p className="text-sm text-center text-white select-none">
+                  Get <a href="#" className="underline text-blue-600">What</a> Done?
+                </p>
               </form>
             </div>
           </div>
