@@ -3,11 +3,12 @@ import gsap from "gsap";
 import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { NotepadModel } from "../assets/models/NotepadModel.jsx";
+import Tooltip from "../components/ToolTip.jsx";
 
 const LandingPage = () => {
 
   const words = ["Get", "It", "Done."];
-
+  const description = "Your taxes, your groceries, that pile of laundry, those dinner plans, that marathon you wanted to run. Who cares? Write it down and Get It Done.";
   const onLoginClick = () => {
     console.log("Clicked");
   }
@@ -81,7 +82,7 @@ const LandingPage = () => {
                   Don't have an account? <a href="#" className="underline text-blue-600">Sign up</a>
                 </p>
                 <p className="text-sm text-center text-white select-none">
-                  Get <a href="#" className="underline text-blue-600">What</a> Done?
+                  Get <Tooltip text="What" tooltipText={description} /> Done?
                 </p>
               </form>
             </div>
