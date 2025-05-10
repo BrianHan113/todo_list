@@ -31,7 +31,7 @@ const LandingPage = () => {
 
             <Canvas
               style={{ width: '100%', height: '100%' }}
-              camera={{ position: [0, 0, 12], fov: 1 }}
+              camera={{ position: [-7, 7, 12], fov: 0.8 }}
             >
 
               <OrbitControls
