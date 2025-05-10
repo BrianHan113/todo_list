@@ -34,7 +34,7 @@ const LandingPage = () => {
             >
 
               <OrbitControls
-                target={[0, -0.05, 0]}
+                target={[0, -0.05, 0.005]}
                 rotateSpeed={1.5}
                 enableZoom={false}
               />
