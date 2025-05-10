@@ -75,7 +75,7 @@ const LandingPage = () => {
                   placeholder="Password"
                   className="p-3 border rounded-md focus:outline-none"
                 />
-                <button onClick={onLoginClick} className="bg-yellow-500 text-white font-bold py-3 rounded-md">
+                <button onClick={onLoginClick} className="bg-yellow-500 hover:bg-orange-400 text-white font-bold py-3 rounded-md ">
                   Login
                 </button>
                 <p className="text-sm text-center text-white select-none">
