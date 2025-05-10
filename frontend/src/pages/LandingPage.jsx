@@ -3,7 +3,6 @@ import gsap from "gsap";
 import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { NotepadModel } from "../assets/models/NotepadModel.jsx";
-import HeroLights from "../assets/models/HeroLights.jsx";
 
 const LandingPage = () => {
 
@@ -29,26 +28,26 @@ const LandingPage = () => {
         <div className="w-[65vw] h-[100vh] flex justify-center items-center" >
           <figure className="w-full h-full min-h-[50vh]">
 
-            <Canvas style={{ width: '100%', height: '100%' }} camera={{ position: [0, 0, 10], fov: 2 }}>
+            <Canvas
+              style={{ width: '100%', height: '100%' }}
+              camera={{ position: [20, 3, 10], fov: 0.5 }}
 
-              <directionalLight position={[5, 5, 5]} intensity={1} />
+            >
+
               <OrbitControls
-                enablePan={true}
-              // minPolarAngle={Math.PI / 5}
-              // maxPolarAngle={Math.PI / 2}
+                target={[0, -0.05, 0]}
+                rotateSpeed={1.5}
+                enableZoom={false}
               />
 
-              {/* <mesh>
-                <boxGeometry args={[1, 1, 1]} />
-                <meshStandardMaterial color="teal" />
-              </mesh> */}
 
-              <mesh>
+              <group rotation={[Math.PI / 2, 0, 0]}>
+
                 <NotepadModel />
-              </mesh>
 
+              </group>
+              <ambientLight intensity={100} />
 
-              <HeroLights />
 
             </Canvas>
 
