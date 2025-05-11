@@ -27,10 +27,10 @@ const LandingPage = () => {
 
   return (
     <section id="hero">
-      <div className="fixed inset-0 bg-yellow-500 flex items-center justify-center">
+      <div className="flex flex-col md:flex-row fixed inset-0 bg-yellow-500 items-center justify-center">
 
         {/* LEFT: 3D model */}
-        <div className="w-[65vw] h-[100vh] flex justify-center items-center" >
+        <div className="w-full h-[50vh] md:w-[65vw] md:h-[100vh] flex justify-center items-center" >
           <figure className="w-full h-full min-h-[50vh]">
 
             <Canvas
@@ -59,15 +59,15 @@ const LandingPage = () => {
         </div>
 
         {/* RIGHT: Hero Text and Sign In box */}
-        <div className="w-[35vw] h-[100vh] bg-amber-600 " >
+        <div className="w-full h-[50vh] md:w-[35vw] md:h-[100vh] bg-amber-600 " >
           <div className="flex flex-col justify-center items-center h-screen">
-            <div className="text-9xl font-bold text-white select-none hero-text">
+            <div className="text-5xl md:text-7xl lg:text-9xl font-bold text-white select-none hero-text">
               {words.map((word, i) => (
                 <h1 key={i}>{word}</h1>
               ))}
             </div>
-            <div className="text-1xl font-bold text-white mt-10 select-none">
-              <form className="flex flex-col space-y-4 w-[80vw] sm:w-96">
+            <div className="w-full max-w-[80%] font-bold text-white mt-10 select-none mx-auto">
+              <form className="flex flex-col space-y-4 w-full">
                 <input
                   type="text"
                   placeholder="Username"
