@@ -1,26 +1,16 @@
 import { useState } from 'react';
 
 const Tooltip = ({ text, tooltipText }) => {
-  const [clicked, setClicked] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
   return (
-    <div style={{ position: 'relative', display: 'inline-block' }} onClick={() => setClicked(!clicked)}>
+    <div style={{ position: 'relative', display: 'inline-block' }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <p className="underline text-blue-600 cursor-pointer">{text}</p>
-      {clicked && (
-        <span style={{
-          position: 'absolute',
-          backgroundColor: '#333',
-          color: '#fff',
-          padding: '5px',
-          borderRadius: '4px',
-          top: '-450%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          whiteSpace: 'normal',   // Allows text to wrap
-          wordWrap: 'break-word', // Ensures long words break to the next line
-          width: '300px',         // Set a fixed width
-          zIndex: 1000
-        }}>
+      {hovered && (
+        <span className="absolute bg-gray-800 text-white p-1.5 rounded-md top-[-450%] left-1/2 transform -translate-x-1/2 whitespace-normal break-words w-72 z-10">
           {tooltipText}
         </span>
       )}

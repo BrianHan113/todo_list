@@ -4,13 +4,17 @@ import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { NotepadModel } from "../assets/models/NotepadModel.jsx";
 import Tooltip from "../components/ToolTip.jsx";
+import { useNavigate } from 'react-router-dom';
+
 
 const LandingPage = () => {
+  const navigate = useNavigate();
 
   const words = ["Get", "It", "Done."];
   const description = "Your taxes, your groceries, that pile of laundry, those dinner plans, that marathon you wanted to run. Who cares? Write it down and Get It Done.";
+
   const onLoginClick = () => {
-    console.log("Clicked");
+    navigate('/app');
   }
 
   useGSAP(() => {
@@ -75,14 +79,14 @@ const LandingPage = () => {
                   placeholder="Password"
                   className="p-3 border rounded-md focus:outline-none"
                 />
-                <button onClick={onLoginClick} className="bg-yellow-500 hover:bg-orange-400 text-white font-bold py-3 rounded-md ">
+                <button onClick={onLoginClick} type="button" className="bg-yellow-500 hover:bg-orange-400 duration-150 ease-in-out text-white font-bold py-3 rounded-md ">
                   Login
                 </button>
                 <p className="text-sm text-center text-white select-none">
                   Don't have an account? <a href="#" className="underline text-blue-600">Sign up</a>
                 </p>
                 <p className="text-sm text-center text-white select-none">
-                  Get <Tooltip text="What" tooltipText={description} /> Done?
+                  <Tooltip text="Get What Done?" tooltipText={description} />
                 </p>
               </form>
             </div>
