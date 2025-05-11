@@ -60,13 +60,13 @@ const LandingPage = () => {
 
         {/* RIGHT: Hero Text and Sign In box */}
         <div className="w-full h-[50vh] md:w-[35vw] md:h-[100vh] bg-amber-600 " >
-          <div className="flex flex-col justify-center items-center h-screen">
-            <div className="text-5xl md:text-7xl lg:text-9xl font-bold text-white select-none hero-text">
+          <div className="flex flex-row md:flex-col justify-center items-center md:h-[100vh]">
+            <div className="mr-5 text-5xl md:text-7xl lg:text-9xl font-bold text-white select-none hero-text">
               {words.map((word, i) => (
                 <h1 key={i}>{word}</h1>
               ))}
             </div>
-            <div className="w-full max-w-[80%] font-bold text-white mt-10 select-none mx-auto">
+            <div className="w-1/2 md:w-full max-w-[80%] font-bold text-white mt-10 select-none">
               <form className="flex flex-col space-y-4 w-full">
                 <input
                   type="text"
@@ -82,14 +82,24 @@ const LandingPage = () => {
                 <button onClick={onLoginClick} type="button" className="bg-yellow-500 hover:bg-orange-400 duration-150 ease-in-out text-white font-bold py-3 rounded-md ">
                   Login
                 </button>
-                <p className="text-sm text-center text-white select-none">
-                  Don't have an account? <a href="#" className="underline text-blue-600">Sign up</a>
-                </p>
-                <p className="text-sm text-center text-white select-none">
-                  <Tooltip text="Get What Done?" tooltipText={description} />
-                </p>
               </form>
             </div>
+            <div className="hidden md:block font-bold text-white ">
+              <p className="mt-5 text-sm text-center text-white select-none">
+                Don't have an account? <a href="#" className="underline text-blue-600">Sign up</a>
+              </p>
+              <p className="mt-2 text-sm text-center text-white select-none">
+                <Tooltip text="Get What Done?" tooltipText={description} />
+              </p>
+            </div>
+          </div>
+          <div className="block md:hidden font-bold text-white ">
+            <p className="mt-5 text-sm text-center text-white select-none">
+              Don't have an account? <a href="#" className="underline text-blue-600">Sign up</a>
+            </p>
+            <p className="mt-2 text-sm text-center text-white select-none">
+              <Tooltip text="Get What Done?" tooltipText={description} />
+            </p>
           </div>
         </div>
       </div>
