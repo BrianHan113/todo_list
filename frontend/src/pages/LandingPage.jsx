@@ -71,7 +71,7 @@ const LandingPage = () => {
                 <input
                   type="text"
                   placeholder="Username"
-                  autoFocus
+                  autoFocus={typeof window !== 'undefined' && window.innerWidth >= 768}
                   className="p-3 border rounded-md focus:outline-none"
                 />
                 <input
