@@ -63,7 +63,7 @@ const LandingPage = () => {
         </div>
 
         {/* RIGHT: Hero Text and Sign In box */}
-        <div className="w-full h-[50vh] md:w-[35vw] md:h-[100vh] bg-amber-600 " >
+        <div className="w-full h-[50vh] md:w-[35vw] md:h-[100vh] bg-amber-600 overflow-y-auto" >
           <div className="flex flex-row md:flex-col justify-center items-center md:h-[100vh]">
             <div className="mr-5 text-5xl md:text-7xl lg:text-9xl font-bold text-white select-none hero-text">
               {words.map((word, i) => (
@@ -90,7 +90,7 @@ const LandingPage = () => {
             </div>
             <div className="hidden md:block font-bold text-white ">
               <p className="mt-5 text-sm text-center text-white select-none">
-                Don't have an account?
+                Don't have an account? {" "}
                 <span
                   onClick={handleSignUpClick}
                   className="underline text-blue-600 cursor-pointer">
@@ -104,7 +104,12 @@ const LandingPage = () => {
           </div>
           <div className="block md:hidden font-bold text-white ">
             <p className="mt-5 text-lg text-center text-white select-none">
-              Don't have an account? <a href="#" className="underline text-blue-600">Sign up</a>
+              Don't have an account? {" "}
+              <span
+                onClick={handleSignUpClick}
+                className="underline text-blue-600 cursor-pointer">
+                Sign up
+              </span>
             </p>
             <p className="mt-2 text-lg text-center text-white select-none">
               <Tooltip text="Get What Done?" tooltipText={description} y_translate={-550} />
