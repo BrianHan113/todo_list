@@ -18,7 +18,7 @@ const LandingPage = () => {
   }
 
   const handleSignUpClick = () => {
-    navigate('/signup')
+
   }
 
   useGSAP(() => {
@@ -70,7 +70,7 @@ const LandingPage = () => {
                 <h1 key={i}>{word}</h1>
               ))}
             </div>
-            <div className="w-1/2 md:w-full max-w-[80%] font-bold text-white mt-10 select-none">
+            <div className="w-1/2 md:w-full max-w-[80%] font-bold text-white mt-10 select-none ">
               <form className="flex flex-col space-y-4 w-full">
                 <input
                   type="text"

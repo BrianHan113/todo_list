@@ -23,14 +23,14 @@ const Tooltip = ({ text, tooltipText, y_translate }) => {
   }, [clicked]); // Only activates at first mount, and when we click the tooltip opener text
 
   return (
-    <div
+    <span
       ref={tooltipRef}
       style={{ position: 'relative', display: 'inline-block' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() => setClicked(c => !c)}
     >
-      <p className="underline text-blue-600 cursor-pointer">{text}</p>
+      <span className="underline text-blue-600 cursor-pointer">{text}</span>
       {(hovered || clicked) && (
         <span
           className="absolute bg-gray-800 text-white p-1.5 rounded-md left-1/2 transform -translate-x-1/2 whitespace-normal break-words w-72 z-10"
@@ -39,7 +39,7 @@ const Tooltip = ({ text, tooltipText, y_translate }) => {
           {tooltipText}
         </span>
       )}
-    </div>
+    </span>
   );
 };
 
