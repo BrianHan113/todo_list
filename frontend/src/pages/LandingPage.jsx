@@ -30,11 +30,11 @@ const LandingPage = () => {
       <div className="flex flex-col md:flex-row fixed inset-0 bg-yellow-500 items-center justify-center">
 
         {/* LEFT: 3D model */}
-        <div className="w-full h-[50vh] md:w-[65vw] md:h-[100vh] flex justify-center items-center" >
-          <figure className="w-full h-full min-h-[50vh]">
+        <div className="w-full h-[50vh] md:w-[65vw] md:h-[100vh]" >
+          <figure className="w-full h-full">
 
             <Canvas
-              style={{ width: '100%', height: '100%' }}
+              className="w-full h-full"
               camera={{ position: [-7, 7, 12], fov: 0.8 }}
             >
 
