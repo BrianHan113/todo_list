@@ -17,7 +17,7 @@ export default function SignUpModal() {
 
       {open && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-40">
-          <div className="bg-amber-600 p-6 rounded-lg w-full max-w-md">
+          <div className="bg-amber-600 p-6 rounded-lg w-full max-w-sm">
             <h2 className="text-xl font-semibold mb-4">Create an Account</h2>
 
             <form className="flex flex-col space-y-4 w-full">
@@ -44,8 +44,6 @@ export default function SignUpModal() {
                 Cancel
               </button>
             </form>
-
-
 
           </div>
         </div>

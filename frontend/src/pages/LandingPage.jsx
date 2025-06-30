@@ -100,12 +100,7 @@ const LandingPage = () => {
           </div>
           <div className="block md:hidden font-bold text-white ">
             <p className="mt-5 text-lg text-center text-white select-none">
-              Don't have an account? {" "}
-              <span
-                onClick={handleSignUpClick}
-                className="underline text-blue-600 cursor-pointer">
-                Sign up
-              </span>
+              <SignUpModal />
             </p>
             <p className="mt-2 text-lg text-center text-white select-none">
               <Tooltip text="Get What Done?" tooltipText={description} y_translate={-550} />
