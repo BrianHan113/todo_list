@@ -80,7 +80,7 @@ const LandingPage = () => {
                   placeholder="Password"
                   className="p-3 border rounded-md focus:outline-none"
                 />
-                <button onClick={onLoginClick} type="button" className="bg-yellow-500 hover:bg-orange-400 duration-150 ease-in-out text-white font-bold py-3 rounded-md ">
+                <button onClick={onLoginClick} type="submit" className="bg-yellow-500 hover:bg-orange-400 duration-150 ease-in-out text-white font-bold py-3 rounded-md ">
                   Login
                 </button>
               </form>
