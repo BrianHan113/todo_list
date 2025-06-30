@@ -86,18 +86,14 @@ const LandingPage = () => {
               </form>
             </div>
             <div className="hidden md:block font-bold text-white ">
-              <p className="mt-5 text-sm text-center text-white select-none">
-                <SignUpModal onTrigger={onLoginClick} />
-              </p>
+              <SignUpModal onTrigger={onLoginClick} />
               <p className="mt-2 text-sm text-center text-white select-none">
                 <Tooltip text="Get What Done?" tooltipText={description} y_translate={-350} />
               </p>
             </div>
           </div>
           <div className="block md:hidden font-bold text-white ">
-            <p className="mt-5 text-lg text-center text-white select-none">
-              <SignUpModal onTrigger={onLoginClick} />
-            </p>
+            <SignUpModal onTrigger={onLoginClick} />
             <p className="mt-2 text-sm text-center text-white select-none">
               <Tooltip text="Get What Done?" tooltipText={description} y_translate={-350} />
             </p>
