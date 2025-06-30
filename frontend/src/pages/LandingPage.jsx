@@ -12,14 +12,10 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   const words = ["Get", "It", "Done."];
-  const description = "Your taxes, your groceries, that pile of laundry, those dinner plans, that marathon, and whatever else.";
+  const description = "Appointments, emails, taxes, groceries, laundry, bills, whatever. Write it down so you can get it done.";
 
   const onLoginClick = () => {
     navigate('/app');
-  }
-
-  const handleSignUpClick = () => {
-    <SignUpModal />
   }
 
   useGSAP(() => {
@@ -91,19 +87,19 @@ const LandingPage = () => {
             </div>
             <div className="hidden md:block font-bold text-white ">
               <p className="mt-5 text-sm text-center text-white select-none">
-                <SignUpModal />
+                <SignUpModal onTrigger={onLoginClick} />
               </p>
               <p className="mt-2 text-sm text-center text-white select-none">
-                <Tooltip text="Get What Done?" tooltipText={description} y_translate={-370} />
+                <Tooltip text="Get What Done?" tooltipText={description} y_translate={-350} />
               </p>
             </div>
           </div>
           <div className="block md:hidden font-bold text-white ">
             <p className="mt-5 text-lg text-center text-white select-none">
-              <SignUpModal />
+              <SignUpModal onTrigger={onLoginClick} />
             </p>
-            <p className="mt-2 text-lg text-center text-white select-none">
-              <Tooltip text="Get What Done?" tooltipText={description} y_translate={-550} />
+            <p className="mt-2 text-sm text-center text-white select-none">
+              <Tooltip text="Get What Done?" tooltipText={description} y_translate={-350} />
             </p>
           </div>
         </div>

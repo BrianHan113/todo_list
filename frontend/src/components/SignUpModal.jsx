@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function SignUpModal() {
+export default function SignUpModal({ onTrigger }) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -20,7 +20,7 @@ export default function SignUpModal() {
           <div className="bg-amber-600 p-6 rounded-lg w-full max-w-sm">
             <h2 className="text-xl font-semibold mb-4">Create an Account</h2>
 
-            <form className="flex flex-col space-y-4 w-full">
+            <form className="flex flex-col space-y-1 w-full">
               <input
                 type="text"
                 placeholder="Username"
@@ -32,7 +32,13 @@ export default function SignUpModal() {
                 placeholder="Password"
                 className="p-3 border rounded-md focus:outline-none"
               />
+              <input
+                type="date"
+                max={new Date().toISOString().split("T")[0]} // prevents future dates
+                className="p-3 border border-white text-white/60 rounded-md focus:outline-none"
+              />
               <button type="button"
+                onClick={onTrigger}
                 className="bg-yellow-500 hover:bg-orange-400 duration-150 ease-in-out text-white font-bold py-3 rounded-md "
               >
                 Register & Login
