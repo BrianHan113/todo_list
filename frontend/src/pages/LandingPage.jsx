@@ -5,20 +5,21 @@ import { Canvas } from '@react-three/fiber';
 import { NotepadModel } from "../assets/models/NotepadModel.jsx";
 import Tooltip from "../components/ToolTip.jsx";
 import { useNavigate } from 'react-router-dom';
+import SignUpModal from "../components/SignUpModal.jsx"
 
 
 const LandingPage = () => {
   const navigate = useNavigate();
 
   const words = ["Get", "It", "Done."];
-  const description = "Your taxes, your groceries, that pile of laundry, those dinner plans, that marathon you wanted to run. Who cares? Write it down and Get It Done.";
+  const description = "Your taxes, your groceries, that pile of laundry, those dinner plans, that marathon, and whatever else.";
 
   const onLoginClick = () => {
     navigate('/app');
   }
 
   const handleSignUpClick = () => {
-
+    <SignUpModal />
   }
 
   useGSAP(() => {
@@ -90,15 +91,10 @@ const LandingPage = () => {
             </div>
             <div className="hidden md:block font-bold text-white ">
               <p className="mt-5 text-sm text-center text-white select-none">
-                Don't have an account? {" "}
-                <span
-                  onClick={handleSignUpClick}
-                  className="underline text-blue-600 cursor-pointer">
-                  Sign up
-                </span>
+                <SignUpModal />
               </p>
               <p className="mt-2 text-sm text-center text-white select-none">
-                <Tooltip text="Get What Done?" tooltipText={description} y_translate={-475} />
+                <Tooltip text="Get What Done?" tooltipText={description} y_translate={-370} />
               </p>
             </div>
           </div>
