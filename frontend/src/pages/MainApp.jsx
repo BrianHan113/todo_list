@@ -1,8 +1,12 @@
 import AgeCounter from '../components/AgeCounter.jsx'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
+
+// Use actual ID per task as the key when connecting to backend later
 
 const MainApp = () => {
+
+  const descRef = useRef(null);
 
   const [tasks, setTasks] = useState([
     { name: "FIRST", desc: "first desc" },
@@ -43,6 +47,7 @@ const MainApp = () => {
       setTasks(t => [{ name: newTask, desc: newDesc }, ...t]);
       setNewTask("");
       setNewDesc("");
+      descRef.current.style.height = 'auto';
     }
   }
 
@@ -81,6 +86,7 @@ const MainApp = () => {
               className="border border-gray-300 rounded px-2 py-1"
             />
             <textarea
+              ref={descRef}
               rows={1}
               placeholder="Description (Optional)"
               value={newDesc}
