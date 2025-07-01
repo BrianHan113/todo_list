@@ -42,13 +42,13 @@ export default function SignUpModal({ onTrigger }) {
                 className="p-3 border border-white text-white/60 rounded-md focus:outline-none"
               />
               <button type="submit"
-                className="bg-yellow-500 hover:bg-orange-400 duration-150 ease-in-out text-white font-bold py-3 rounded-md "
+                className="bg-yellow-500 hover:bg-orange-400 duration-150 ease-in-out text-white font-bold py-3 rounded-md cursor-pointer"
               >
                 Register & Login
               </button>
               <button
                 onClick={() => setOpen(false)}
-                className="bg-orange-400 hover:bg-orange-400 duration-150 ease-in-out text-white font-bold py-3 rounded-md "
+                className="bg-orange-400 hover:bg-orange-400 duration-150 ease-in-out text-white font-bold py-3 rounded-md cursor-pointer"
               >
                 Cancel
               </button>

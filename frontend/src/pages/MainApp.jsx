@@ -8,6 +8,7 @@ const MainApp = () => {
 
   const descRef = useRef(null);
 
+  const dobString = "2005-01-11T12:00"
   const [tasks, setTasks] = useState([
     { name: "FIRST", desc: "first desc" },
     { name: "dummy", desc: "testing" },
@@ -65,9 +66,12 @@ const MainApp = () => {
   return (
 
     <div className="flex flex-col w-[100vw] items-center bg-yellow-500 min-h-screen">
-      <h1 className="text-3xl text-white select-none font-bold p-4 text-center">
-        You Are <AgeCounter UTCString="2005-01-11T12:00" /> Years Old
-      </h1>
+
+      <div>
+        <h1 className="text-3xl text-white select-none font-bold p-4 text-center">
+          You Are <AgeCounter UTCString={dobString} /> Years Old.
+        </h1>
+      </div>
 
       <div className="bg-white w-[90%] md:w-[50%] px-5 rounded overflow-y-auto max-h-[75vh] md:max-h-[85vh]">
         <form className="flex sticky top-0 z-10 bg-white pt-5 pb-5"
@@ -94,7 +98,7 @@ const MainApp = () => {
               className="border border-gray-300 rounded px-2 py-1"
             />
           </div>
-          <button type="submit" className="ml-4 px-3 py-6.5 bg-blue-500 text-white rounded h-full hover:bg-blue-700">
+          <button type="submit" className="ml-4 px-3 py-6.5 bg-blue-500 text-white rounded h-full hover:bg-blue-700 cursor-pointer">
             Add
           </button>
         </form>
@@ -103,7 +107,7 @@ const MainApp = () => {
           {tasks.map((task, index) => (
             <li
               key={index}
-              className="border-b pb-1 hover:bg-amber-100"
+              className="border-b pb-1 hover:bg-amber-100 cursor-pointer"
               onClick={() => openModal(task)}
             >
               <div className="flex justify-between items-start">
@@ -113,7 +117,7 @@ const MainApp = () => {
                     e.stopPropagation();
                     deleteTask(index)
                   }}
-                  className="text-red-500 hover:underline ml-4"
+                  className="text-red-500 hover:underline ml-4 cursor-pointer"
                 >
                   Delete
                 </button>
