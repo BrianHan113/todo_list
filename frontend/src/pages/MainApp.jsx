@@ -30,7 +30,7 @@ const MainApp = () => {
         You Are <AgeCounter UTCString="2005-01-11T12:00" /> Years Old
       </h1>
 
-      <div className="bg-white w-[90%] px-5 max-w-md rounded overflow-y-auto max-h-[75vh] md:max-h-[85vh]">
+      <div className="bg-white w-[90%] md:w-[50%] px-5 rounded overflow-y-auto max-h-[75vh] md:max-h-[85vh]">
         <form className="flex sticky top-0 z-10 bg-white pt-5 pb-5"
           onSubmit={e => {
             e.preventDefault();
@@ -46,11 +46,11 @@ const MainApp = () => {
               onChange={handleInputChange}
               className="border border-gray-300 rounded px-2 py-1"
             />
-            <input
-              type="text"
+            <textarea
+              rows={1}
               placeholder="Description (Optional)"
-              value={newTask}
-              onChange={handleInputChange}
+              // value={newTaskDescription}
+              // onChange={handleDescriptionChange}
               className="border border-gray-300 rounded px-2 py-1"
             />
           </div>
