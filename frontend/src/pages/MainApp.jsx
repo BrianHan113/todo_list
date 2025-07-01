@@ -1,27 +1,61 @@
 import AgeCounter from '../components/AgeCounter.jsx'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 const MainApp = () => {
 
-  const [tasks, setTasks] = useState(["FIRST", "Buy milk", "Do laundry", "Finish homework", "Buy milk", "Do laundry", "Finish homework", "Buy milk", "Do laundry", "Finish homework", "Buy milk", "Do laundry", "Finish homework", "Buy milk", "Do laundry", "Finish homework", "LAST"]);
+  const [tasks, setTasks] = useState([
+    { name: "FIRST", desc: "first desc" },
+    { name: "dummy", desc: "testing" },
+    { name: "dummy", desc: "testing" },
+    { name: "dummy", desc: "testing" },
+    { name: "dummy", desc: "testing" },
+    { name: "dummy", desc: "testing" },
+    { name: "dummy", desc: "testing" },
+    { name: "dummy", desc: "testing" },
+    { name: "dummy", desc: "testing" },
+    { name: "dummy", desc: "testing" },
+    { name: "dummy", desc: "testing" },
+    { name: "dummy", desc: "testing" },
+    { name: "dummy", desc: "testing" },
+    { name: "dummy", desc: "testing" },
+    { name: "dummy", desc: "testing" },
+    { name: "dummy", desc: "testing" },
+    { name: "LAST", desc: "last desc" }
+  ]);
   const [newTask, setNewTask] = useState("");
+  const [newDesc, setNewDesc] = useState("");
 
-  function handleInputChange(event) {
+  useEffect(() => { // Debug output
+    console.log(tasks);
+  }, [tasks]);
+
+  function handleTaskInputChange(event) {
     setNewTask(event.target.value);
+  }
+
+  function handleDescInputChange(event) {
+    setNewDesc(event.target.value);
   }
 
   function addTask() {
     if (newTask.trim() !== "") {
-      setTasks(t => [newTask, ...t]);
+      setTasks(t => [{ name: newTask, desc: newDesc }, ...t]);
       setNewTask("");
+      setNewDesc("");
     }
   }
 
-  function deleteTask(index) {
-    const updatedTasks = tasks.filter((_, i) => i !== index);
-    setTasks(updatedTasks);
+  function openModal(task) {
+    console.log(task.name)
+    console.log(task.desc)
   }
+
+
+  function deleteTask(index) {
+    setTasks(t => t.filter((_, i) => i !== index));
+  }
+
 
   return (
 
@@ -43,14 +77,14 @@ const MainApp = () => {
               autoFocus={typeof window !== 'undefined' && window.innerWidth >= 768}
               maxLength={40}
               value={newTask}
-              onChange={handleInputChange}
+              onChange={handleTaskInputChange}
               className="border border-gray-300 rounded px-2 py-1"
             />
             <textarea
               rows={1}
               placeholder="Description (Optional)"
-              // value={newTaskDescription}
-              // onChange={handleDescriptionChange}
+              value={newDesc}
+              onChange={handleDescInputChange}
               className="border border-gray-300 rounded px-2 py-1"
             />
           </div>
@@ -58,19 +92,31 @@ const MainApp = () => {
             Add
           </button>
         </form>
+
         <ol className="space-y-2 pb-2">
           {tasks.map((task, index) => (
-            <li key={index} className="flex justify-between items-center border-b pb-1">
-              <span>{task}</span>
-              <button onClick={() => deleteTask(index)} className="text-red-500">Delete</button>
+            <li
+              key={index}
+              className="border-b pb-1 hover:bg-amber-100"
+              onClick={() => openModal(task)}
+            >
+              <div className="flex justify-between items-start">
+                <span className="font-semibold">{task.name}</span>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteTask(index)
+                  }}
+                  className="text-red-500 hover:underline ml-4"
+                >
+                  Delete
+                </button>
+              </div>
             </li>
           ))}
         </ol>
       </div>
     </div >
-
-
-
   );
 }
 
