@@ -1,7 +1,9 @@
 import AgeCounter from '../components/AgeCounter.jsx'
 import { useState, useEffect, useRef } from 'react';
 
-
+// TODO:
+// Use dnd-kit for reordering tasks
+// Logout option
 // Use actual ID per task as the key when connecting to backend later
 
 const MainApp = () => {
