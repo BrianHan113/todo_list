@@ -17,7 +17,7 @@ export default function SignUpModal({ onTrigger }) {
 
       {open && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-40">
-          <div className="bg-amber-600 p-6 rounded-lg w-full max-w-sm">
+          <div className="bg-amber-600 p-6 rounded-lg w-full max-w-xl">
             <h2 className="text-xl font-semibold mb-4 text-center select-none">Create an Account</h2>
 
             <form className="flex flex-col space-y-1 w-full"
