@@ -24,7 +24,6 @@ import {
 import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers';
 
 // TODO:
-// Logout option
 // Use actual ID per task as the key when connecting to backend later
 
 const MainApp = () => {
@@ -124,7 +123,7 @@ const MainApp = () => {
   });
 
   return (
-    <div className="flex flex-col w-[100vw] items-center bg-amber-600 min-h-screen" >
+    <div className="flex flex-col w-[100vw] h-[100svh] items-center bg-amber-600" >
 
       <div className="text-3xl text-white select-none font-bold p-4 text-center">
         <span className="age-line">You </span>
@@ -187,7 +186,7 @@ const MainApp = () => {
       </div>
 
       <div onClick={() => handleLogOut()}>
-        <p className="mt-2 text-sm text-center underline text-blue-600 cursor-pointer select-none font-bold">
+        <p className="mt-2 mb-2 text-sm text-center text-white cursor-pointer select-none font-bold">
           Log Out
         </p>
       </div>
