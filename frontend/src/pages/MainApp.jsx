@@ -1,5 +1,8 @@
 import AgeCounter from '../components/AgeCounter.jsx'
 import { useState, useEffect, useRef } from 'react';
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+
 
 // TODO:
 // Use dnd-kit for reordering tasks
@@ -64,15 +67,23 @@ const MainApp = () => {
     setTasks(t => t.filter((_, i) => i !== index));
   }
 
+  useGSAP(() => {
+    gsap.fromTo(
+      ".age-line",
+      { y: 50, opacity: 0 }, /* From */
+      { y: 0, opacity: 1, stagger: 0.6, duration: 1, ease: "power2.inOut" } /* To */
+    );
+  });
 
   return (
+    < div className="flex flex-col w-[100vw] items-center bg-yellow-500 min-h-screen" >
 
-    <div className="flex flex-col w-[100vw] items-center bg-yellow-500 min-h-screen">
-
-      <div>
-        <h1 className="text-3xl text-white select-none font-bold p-4 text-center">
-          You Are <AgeCounter UTCString={dobString} /> Years Old.
-        </h1>
+      <div className="text-3xl text-white select-none font-bold p-4 text-center">
+        <span className="age-line">You </span>
+        <span className="age-line">Are </span>
+        <span className="age-line"><AgeCounter UTCString={dobString} /></span>
+        <span className="age-line"> Years </span>
+        <span className="age-line"> Old.</span>
       </div>
 
       <div className="bg-white w-[90%] md:w-[50%] px-5 rounded overflow-y-auto max-h-[75vh] md:max-h-[85vh]">
@@ -86,7 +97,6 @@ const MainApp = () => {
               type="text"
               placeholder="Enter a task..."
               autoFocus={typeof window !== 'undefined' && window.innerWidth >= 768}
-              maxLength={40}
               value={newTask}
               onChange={handleTaskInputChange}
               className="border border-gray-300 rounded px-2 py-1"
@@ -100,7 +110,7 @@ const MainApp = () => {
               className="border border-gray-300 rounded px-2 py-1"
             />
           </div>
-          <button type="submit" className="ml-4 px-3 py-6.5 bg-blue-500 text-white rounded h-full hover:bg-blue-700 cursor-pointer">
+          <button type="submit" className="ml-4 px-3 py-6.5 bg-yellow-500 hover:bg-orange-400 text-white rounded h-full cursor-pointer">
             Add
           </button>
         </form>
@@ -112,7 +122,7 @@ const MainApp = () => {
               className="border-b pb-1 hover:bg-amber-100 cursor-pointer"
               onClick={() => openModal(task)}
             >
-              <div className="flex justify-between items-start">
+              <div className="p-3 flex justify-between items-start">
                 <span className="font-semibold">{task.name}</span>
                 <button
                   onClick={(e) => {
