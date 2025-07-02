@@ -33,21 +33,10 @@ const MainApp = () => {
   const dobString = "2005-01-11T12:00"
   const [tasks, setTasks] = useState([
     { name: "FIRST", desc: "first desc" },
-    { name: "dummy", desc: "testing" },
-    { name: "dummy", desc: "testing" },
-    { name: "dummy", desc: "testing" },
-    { name: "dummy", desc: "testing" },
-    { name: "dummy", desc: "testing" },
-    { name: "dummy", desc: "testing" },
-    { name: "dummy", desc: "testing" },
-    { name: "dummy", desc: "testing" },
-    { name: "dummy", desc: "testing" },
-    { name: "dummy", desc: "testing" },
-    { name: "dummy", desc: "testing" },
-    { name: "dummy", desc: "testing" },
-    { name: "dummy", desc: "testing" },
-    { name: "dummy", desc: "testing" },
-    { name: "dummy", desc: "testing" },
+    { name: "dummy1", desc: "testing" },
+    { name: "dummy2", desc: "testing" },
+    { name: "dummy3", desc: "testing" },
+    { name: "dummy4", desc: "testing" },
     { name: "LAST", desc: "last desc" }
   ]);
   const [newTask, setNewTask] = useState("");
@@ -186,7 +175,7 @@ const MainApp = () => {
       </div>
 
       <div onClick={() => handleLogOut()}>
-        <p className="mt-2 mb-2 text-sm text-center text-white cursor-pointer select-none font-bold">
+        <p className="mt-2 mb-2 text-lg text-center hover:underline text-white cursor-pointer select-none font-bold">
           Log Out
         </p>
       </div>
