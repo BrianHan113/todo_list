@@ -14,7 +14,7 @@ const SortableTask = ({ id, task, onDelete, onClick }) => {
       style={style}
       className="border-b pb-1 hover:bg-amber-100 cursor-pointer"
     >
-      <div className="p-3 flex justify-between items-center">
+      <div className="p-3 flex justify-between items-center" onClick={onClick}>
         <span
           {...attributes}
           {...listeners}
@@ -28,8 +28,8 @@ const SortableTask = ({ id, task, onDelete, onClick }) => {
           ☰
         </span>
         <span
-          className="font-semibold flex-1"
-          onClick={onClick}
+          className="font-semibold flex-1 h-full"
+          
         >
           {task.name}
         </span>

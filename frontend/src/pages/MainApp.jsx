@@ -4,6 +4,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import SortableTask from '../components/SortableTask.jsx';
 import { useNavigate } from 'react-router-dom';
+import TaskModal from '../components/TaskModal.jsx';
 
 
 import {
@@ -23,6 +24,7 @@ import {
 
 import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers';
 
+
 // TODO:
 // Use actual ID per task as the key when connecting to backend later
 
@@ -41,6 +43,9 @@ const MainApp = () => {
   ]);
   const [newTask, setNewTask] = useState("");
   const [newDesc, setNewDesc] = useState("");
+
+  const [selectedTask, setSelectedTask] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => { // Debug output
     console.log(tasks);
@@ -63,9 +68,17 @@ const MainApp = () => {
     }
   }
 
-  function openModal(task) {
+  const openModal = (task) => {
+    setSelectedTask(task)
+    setIsModalOpen(true)
     console.log(task.name)
     console.log(task.desc)
+  }
+
+  const closeModal = () => {
+    setSelectedTask(null)
+    setIsModalOpen(false)
+    console.log("close")
   }
 
 
@@ -179,6 +192,10 @@ const MainApp = () => {
           Log Out
         </p>
       </div>
+
+      {isModalOpen && selectedTask && (
+        <TaskModal task={selectedTask} onClose={closeModal} />
+      )}
     </div >
   );
 }
