@@ -1,15 +1,48 @@
+import { useState, useEffect } from "react"
 
+const TaskModal = ({ task, onClose }) => {
+  const [name, setName] = useState(task.name)
+  const [desc, setDesc] = useState(task.desc)
 
-const TaskModal = ({ task, onClose }) => (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-    <div className="bg-white p-4 rounded-lg max-w-md w-full">
-      <h2 className="text-xl font-bold mb-2">{task.title}</h2>
-      <p>{task.description}</p>
-      <button onClick={onClose} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
-        Close
-      </button>
+	const handleClose = () => {
+		if (name !== task.name || desc !== task.desc) {
+			handleSave()
+		}
+		onClose()
+}
+
+  const handleSave = () => {
+    console.log("Saved:", { name, desc })
+  }
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-40">
+      <div className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-xl space-y-6">
+        <div className="space-y-4">
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full border rounded px-3 py-2 text-lg font-bold text-amber-700"
+          />
+          <textarea
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+            className="w-full border rounded px-3 py-2 text-gray-700 resize-none h-36 overflow-y-auto"
+          />
+        </div>
+
+        <div className="flex justify-end">
+          <button
+						onClick={handleClose}
+						className="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-5 py-2 rounded-lg transition"
+					>
+						Close
+					</button>
+        </div>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default TaskModal
