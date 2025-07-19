@@ -16,3 +16,6 @@ app.use(cors)
 // Error handling middleware
 
 // Run Server
+app.listen(port, () => {
+    console.log(`http://localhost:${port}/`)
+})
