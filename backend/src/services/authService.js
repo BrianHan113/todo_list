@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const userModel = require('../models/User')
 
-const register = async ({ username, password, dob }) => {
+const register = async (username, password, dob) => {
   const existingUsers = await userModel.getUserByUsername(username);
   if (existingUsers.length > 0) throw new Error('Username already taken');
   if (password.length < 5) throw new Error("Password must be 5+ characters");
@@ -12,7 +12,7 @@ const register = async ({ username, password, dob }) => {
 
   // Generate token right away for register and login functionality
   const token = jwt.sign(
-    { id: newUser.id, username: newUser.username },
+    { user_id: newUser.user_id, username: newUser.username },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRE || "12h" }
   );
@@ -29,7 +29,7 @@ const login = async (username, password) => {
   if (!match) throw new Error("Invalid username or password")
 
   const token = jwt.sign(
-    { id: user.user_id, username: user.username },
+    { user_id: user.user_id, username: user.username },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRE || "12h" }
   )
