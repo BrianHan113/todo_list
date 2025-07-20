@@ -12,12 +12,12 @@ const register = async (username, password, dob) => {
 
   // Generate token right away for register and login functionality
   const token = jwt.sign(
-    { user_id: newUser.user_id, username: newUser.username },
+    { user_id: newUser.user_id, username: newUser.username, dob: newUser.dob },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRE || "12h" }
   );
 
-  return { user: newUser, token };
+  return { token };
 };
 
 const login = async (username, password) => {
@@ -29,16 +29,13 @@ const login = async (username, password) => {
   if (!match) throw new Error("Invalid username or password")
 
   const token = jwt.sign(
-    { user_id: user.user_id, username: user.username },
+    { user_id: user.user_id, username: user.username, dob: user.dob },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRE || "12h" }
   )
 
-  const userWithoutPassword = { ...user };
-  delete userWithoutPassword.password;
-
   // Token should be attatched to every subsequent req in the auth header by frontend
-  return { user: userWithoutPassword, token };
+  return { token };
 }
 
 module.exports = {
