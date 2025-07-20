@@ -1,3 +1,5 @@
+-- docker cp C:\Users\brian\Documents\code\todo_list\backend\src\data\seed.sql postgres-db:/docker-entrypoint-initdb.d/
+
 -- Clear existing data
 TRUNCATE TABLE tasks, users RESTART IDENTITY CASCADE;
 

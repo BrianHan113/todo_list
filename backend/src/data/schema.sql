@@ -1,3 +1,5 @@
+-- docker cp C:\Users\brian\Documents\code\todo_list\backend\src\data\schema.sql postgres-db:/docker-entrypoint-initdb.d/
+
 CREATE TABLE users (
   user_id SERIAL PRIMARY KEY,
   username VARCHAR(255) NOT NULL UNIQUE,

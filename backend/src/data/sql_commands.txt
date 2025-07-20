@@ -1,0 +1,10 @@
+Copy into docker container
+docker cp C:\Users\brian\Documents\code\todo_list\backend\src\data\schema.sql postgres-db:/docker-entrypoint-initdb.d/
+docker cp C:\Users\brian\Documents\code\todo_list\backend\src\data\seed.sql postgres-db:/docker-entrypoint-initdb.d/
+
+Execute
+docker exec -it postgres-db psql -U postgres -d todo_list_db -f /docker-entrypoint-initdb.d/schema.sql
+docker exec -it postgres-db psql -U postgres -d todo_list_db -f /docker-entrypoint-initdb.d/seed.sql
+
+Go integrated terminal
+docker exec -it postgres-db psql -U postgres -d todo_list_db
