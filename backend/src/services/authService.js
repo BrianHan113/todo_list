@@ -5,15 +5,16 @@ const userModel = require('../models/User')
 const register = async ({ username, password, dob }) => {
   const existingUsers = await userModel.getUserByUsername(username);
   if (existingUsers.length > 0) throw new Error('Username already taken');
+  if (password.length < 5) throw new Error("Password must be 5+ characters");
 
   const hashedPassword = await bcrypt.hash(password, 12);
-  const newUser = await userModel.createUser({ username, password: hashedPassword, dob });
+  const newUser = await userModel.createUser(username, hashedPassword, dob);
 
   // Generate token right away for register and login functionality
   const token = jwt.sign(
     { id: newUser.id, username: newUser.username },
     process.env.JWT_SECRET,
-    { expiresIn: process.env.JWT_EXPIRE }
+    { expiresIn: process.env.JWT_EXPIRE || "12h" }
   );
 
   return { user: newUser, token };
@@ -21,16 +22,16 @@ const register = async ({ username, password, dob }) => {
 
 const login = async (username, password) => {
   const users = await userModel.getUserByUsername(username)
-  if (users.length === 0) throw new Error('User not found')
+  if (users.length === 0) throw new Error("Invalid username or password")
 
   const user = users[0]
   const match = await bcrypt.compare(password, user.password)
-  if (!match) throw new Error('Invalid credentials')
+  if (!match) throw new Error("Invalid username or password")
 
   const token = jwt.sign(
-    { id: user.id, username: user.username },
+    { id: user.user_id, username: user.username },
     process.env.JWT_SECRET,
-    { expiresIn: process.env.JWT_EXPIRE }
+    { expiresIn: process.env.JWT_EXPIRE || "12h" }
   )
 
   const userWithoutPassword = { ...user };
