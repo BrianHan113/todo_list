@@ -17,7 +17,7 @@ const authMiddleware = async (req, res, next) => {
       return next(new Error('Invalid token payload'));
     }
 
-    req.user = { user_id: payload.user_id, username: payload.username };
+    req.user = { user_id: payload.user_id, username: payload.username, dob: payload.dob };
     next();
   } catch (error) {
     if (error.name === 'TokenExpiredError') {

@@ -8,8 +8,6 @@ const helmet = require('helmet')
 const rateLimiter = require('express-rate-limit')
 const authRouter = require('./routes/authRoutes')
 
-
-
 const app = express()
 const port = process.env.PORT || 5000
 
