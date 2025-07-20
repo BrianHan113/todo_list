@@ -3,19 +3,21 @@ const jwt = require('jsonwebtoken')
 const userModel = require('../models/User')
 
 const register = async ({ username, password, dob }) => {
-  const existingUsers = await userModel.getUserByUsername(username)
-  if (existingUsers.length > 0) throw new Error('Username already taken')
+  const existingUsers = await userModel.getUserByUsername(username);
+  if (existingUsers.length > 0) throw new Error('Username already taken');
 
-  const hashedPassword = await bcrypt.hash(password, 12)
+  const hashedPassword = await bcrypt.hash(password, 12);
+  const newUser = await userModel.createUser({ username, password: hashedPassword, dob });
 
-  const newUser = await userModel.createUser({
-    username,
-    password: hashedPassword,
-    dob
-  })
+  // Generate token right away for register and login functionality
+  const token = jwt.sign(
+    { id: newUser.id, username: newUser.username },
+    process.env.JWT_SECRET,
+    { expiresIn: process.env.JWT_EXPIRE }
+  );
 
-  return newUser
-}
+  return { user: newUser, token };
+};
 
 const login = async (username, password) => {
   const users = await userModel.getUserByUsername(username)
@@ -34,6 +36,7 @@ const login = async (username, password) => {
   const userWithoutPassword = { ...user };
   delete userWithoutPassword.password;
 
+  // Token should be attatched to every subsequent req in the auth header by frontend
   return { user: userWithoutPassword, token };
 }
 
