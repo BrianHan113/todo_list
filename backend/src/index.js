@@ -4,7 +4,7 @@ const dotenv = require('dotenv')
 const pool = require('./config/db')
 const helmet = require('helmet')
 const rateLimiter = require('express-rate-limit')
-const authRouter = require('./routes/auth')
+const authRouter = require('./routes/authRoutes')
 
 dotenv.config()
 
