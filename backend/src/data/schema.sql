@@ -18,5 +18,4 @@ CREATE TABLE tasks (
   CHECK (position > 0)
 );
 
-CREATE INDEX idx_user_task ON tasks(user_id, task_id);
-CREATE INDEX idx_user_position ON tasks(user_id, position);
+CREATE INDEX idx_user_position ON tasks(user_id, position); -- for speeding up getTasksOrderedByPosition in Task model
