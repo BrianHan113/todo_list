@@ -43,7 +43,8 @@ const createTask = async (req, res) => {
 const getTask = async (req, res) => {
   try {
     const { id: task_id } = req.params;
-    const task = await taskModel.getTaskByTaskId(task_id);
+    const { user_id } = req.user;
+    const task = await taskModel.getTaskByTaskId(user_id, task_id);
 
     if (!task) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -62,6 +63,7 @@ const getTask = async (req, res) => {
 const updateTask = async (req, res) => {
   try {
     const { id: task_id } = req.params;
+    const { user_id } = req.user;
     const fields = req.body;
 
     if (Object.keys(fields).length === 0) {
@@ -70,7 +72,7 @@ const updateTask = async (req, res) => {
       });
     }
 
-    const updatedTask = await taskModel.updateTask(task_id, fields);
+    const updatedTask = await taskModel.updateTask(user_id, task_id, fields);
 
     if (!updatedTask) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -89,7 +91,8 @@ const updateTask = async (req, res) => {
 const deleteTask = async (req, res) => {
   try {
     const { id: task_id } = req.params;
-    const deleted = await taskModel.deleteTask(task_id);
+    const { user_id } = req.user;
+    const deleted = await taskModel.deleteTask(user_id, task_id);
 
     if (!deleted) {
       return res.status(StatusCodes.NOT_FOUND).json({

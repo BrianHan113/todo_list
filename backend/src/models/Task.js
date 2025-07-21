@@ -13,11 +13,11 @@ const getTasksOrderedByPosition = async (user_id) => {
   }
 }
 
-const getTaskByTaskId = async (task_id) => {
+const getTaskByTaskId = async (user_id, task_id) => {
   try {
     const result = await pool.query(
-      "SELECT * FROM tasks WHERE task_id = $1;",
-      [task_id]
+      "SELECT * FROM tasks WHERE user_id = $1 AND task_id = $2;",
+      [user_id, task_id]
     )
     return result.rows[0]
   } catch (err) {
@@ -39,14 +39,14 @@ const createTask = async (user_id, title, description, position) => {
   }
 }
 
-const updateTask = async (task_id, fields) => {
+const updateTask = async (user_id, task_id, fields) => {
   const keys = Object.keys(fields)
   const values = Object.values(fields)
   const setClause = keys.map((key, i) => `${key} = $${i + 1}`).join(', ')
   try {
     const result = await pool.query(
-      `UPDATE tasks SET ${setClause} WHERE task_id = $${values.length + 1} RETURNING *;`,
-      [...values, task_id]
+      `UPDATE tasks SET ${setClause} WHERE user_id = $${values.length + 1} AND task_id = $${values.length + 2} RETURNING *;`,
+      [...values, user_id, task_id]
     )
     return result.rows[0]
   } catch (err) {
@@ -55,11 +55,11 @@ const updateTask = async (task_id, fields) => {
   }
 }
 
-const deleteTask = async (task_id) => {
+const deleteTask = async (user_id, task_id) => {
   try {
     const result = await pool.query(
-      "DELETE FROM tasks WHERE task_id = $1 RETURNING *;",
-      [task_id]
+      "DELETE FROM tasks WHERE user_id = $1 AND task_id = $2 RETURNING *;",
+      [user_id, task_id]
     )
     return result.rows[0] || null;
   } catch (err) {
