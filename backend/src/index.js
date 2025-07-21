@@ -7,6 +7,8 @@ const pool = require('./config/db')
 const helmet = require('helmet')
 const rateLimiter = require('express-rate-limit')
 const authRouter = require('./routes/authRoutes')
+const authMiddleware = require('./middleware/authMiddleware')
+const tasksRouter = require('./routes/taskRoutes')
 
 const app = express()
 const port = process.env.PORT || 5000
@@ -20,6 +22,7 @@ app.use(rateLimiter({
 }))
 
 app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/tasks', authMiddleware, tasksRouter)
 
 app.get('/', async (req, res) => {
   try {
