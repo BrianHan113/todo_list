@@ -1,10 +1,14 @@
 const jwt = require('jsonwebtoken');
+const { StatusCodes } = require("http-status-codes")
+
 
 const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return next(new Error('No valid token provided'));
+    return res.status(StatusCodes.UNAUTHORIZED).json({
+      error: "No Token",
+    });
   }
 
   const token = authHeader.trim().split(' ')[1];
@@ -14,16 +18,22 @@ const authMiddleware = async (req, res, next) => {
 
     // Validate payload structure
     if (!payload.user_id || !payload.username) {
-      return next(new Error('Invalid token payload'));
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        error: "Invalid payload",
+      });
     }
 
     req.user = { user_id: payload.user_id, username: payload.username, dob: payload.dob };
     next();
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
-      return next(new Error('Session expired. Please log in again.'));
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        error: "Session Expired",
+      });
     }
-    return next(new Error('Invalid token'));
+    return res.status(StatusCodes.UNAUTHORIZED).json({
+      error: "Invalid Token",
+    });
   }
 };
 
