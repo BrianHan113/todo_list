@@ -57,7 +57,11 @@ const updateTask = async (task_id, fields) => {
 
 const deleteTask = async (task_id) => {
   try {
-    await pool.query("DELETE FROM tasks WHERE task_id = $1;", [task_id])
+    const result = await pool.query(
+      "DELETE FROM tasks WHERE task_id = $1 RETURNING *;",
+      [task_id]
+    )
+    return result.rows[0] || null;
   } catch (err) {
     console.error("Error deleting task:", err)
     throw err
