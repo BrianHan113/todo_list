@@ -1,9 +1,73 @@
 const pool = require('../config/db')
 
+const getTasksOrderedByPosition = async (user_id) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM tasks WHERE user_id = $1 ORDER BY position;",
+      [user_id]
+    )
+    return result.rows
+  } catch (err) {
+    console.error("Error getting tasks:", err)
+    throw err
+  }
+}
+
+const getTaskByTaskId = async (task_id) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM tasks WHERE task_id = $1;",
+      [task_id]
+    )
+    return result.rows[0]
+  } catch (err) {
+    console.error("Error getting task:", err)
+    throw err
+  }
+}
+
+const createTask = async (user_id, title, description, position) => {
+  try {
+    const result = await pool.query(
+      "INSERT INTO tasks (user_id, title, description, position) VALUES ($1, $2, $3, $4) RETURNING *;",
+      [user_id, title, description, position]
+    )
+    return result.rows[0]
+  } catch (err) {
+    console.error("Error creating task:", err)
+    throw err
+  }
+}
+
+const updateTask = async (task_id, fields) => {
+  const keys = Object.keys(fields)
+  const values = Object.values(fields)
+  const setClause = keys.map((key, i) => `${key} = $${i + 1}`).join(', ')
+  try {
+    const result = await pool.query(
+      `UPDATE tasks SET ${setClause} WHERE task_id = $${values.length + 1} RETURNING *;`,
+      [...values, task_id]
+    )
+    return result.rows[0]
+  } catch (err) {
+    console.error("Error updating task:", err)
+    throw err
+  }
+}
+
+const deleteTask = async (task_id) => {
+  try {
+    await pool.query("DELETE FROM tasks WHERE task_id = $1;", [task_id])
+  } catch (err) {
+    console.error("Error deleting task:", err)
+    throw err
+  }
+}
+
 module.exports = {
   getTasksOrderedByPosition,
   getTaskByTaskId,
+  createTask,
   updateTask,
-  deleteTask,
-  createTask
+  deleteTask
 }
