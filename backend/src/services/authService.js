@@ -18,11 +18,8 @@ const register = async (username, password, dob) => {
     { expiresIn: process.env.JWT_EXPIRE || "12h" }
   );
 
-  return { // We return the payload with the same JWT for immediate use on the frontend
-    token,
-    user: {
-      user_id: newUser.user_id
-    }
+  return {
+    token
   }
 };
 
@@ -41,10 +38,7 @@ const login = async (username, password) => {
   )
 
   return {
-    token,
-    user: {
-      user_id: user.user_id
-    }
+    token
   }
 };
 
