@@ -5,6 +5,7 @@ const userModel = require('../models/User')
 const register = async (username, password, dob) => {
   const existingUsers = await userModel.getUserByUsername(username);
   if (existingUsers.length > 0) throw new Error('Username already taken');
+  if (username.length == 0) throw new Error("Invalid Username");
   if (password.length < 5) throw new Error("Password must be 5+ characters");
 
   const hashedPassword = await bcrypt.hash(password, 12);
@@ -17,7 +18,14 @@ const register = async (username, password, dob) => {
     { expiresIn: process.env.JWT_EXPIRE || "12h" }
   );
 
-  return { token };
+  return { // We return the payload with the same JWT for immediate use on the frontend
+    token,
+    user: {
+      user_id: newUser.user_id,
+      username: newUser.username,
+      dob: newUser.dob,
+    }
+  }
 };
 
 const login = async (username, password) => {
@@ -34,9 +42,15 @@ const login = async (username, password) => {
     { expiresIn: process.env.JWT_EXPIRE || "12h" }
   )
 
-  // Token should be attatched to every subsequent req in the auth header by frontend
-  return { token };
-}
+  return {
+    token,
+    user: {
+      user_id: user.user_id,
+      username: user.username,
+      dob: user.dob,
+    }
+  }
+};
 
 module.exports = {
   register,
