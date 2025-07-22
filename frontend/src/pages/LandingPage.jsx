@@ -6,6 +6,7 @@ import { NotepadModel } from "../assets/models/NotepadModel.jsx";
 import Tooltip from "../components/ToolTip.jsx";
 import { useNavigate } from 'react-router-dom';
 import SignUpModal from "../components/SignUpModal.jsx"
+import { useState } from "react";
 
 
 const LandingPage = () => {
@@ -14,9 +15,31 @@ const LandingPage = () => {
   const words = ["Get", "It", "Done."];
   const description = "Appointments, emails, taxes, groceries, laundry, bills, whatever. Write it down so you can get it done.";
 
-  const onLoginClick = () => {
-    navigate('/app');
-  }
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const onLoginClick = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/v1/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Login failed");
+      }
+
+      const { token } = await res.json();
+      localStorage.setItem("token", token);
+
+      navigate("/app");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   useGSAP(() => {
     gsap.fromTo(
@@ -25,6 +48,8 @@ const LandingPage = () => {
       { y: 0, opacity: 1, stagger: 0.6, duration: 1, ease: "power2.inOut" } /* To */
     );
   });
+
+
 
   return (
     <section id="hero">
@@ -76,14 +101,19 @@ const LandingPage = () => {
                 <input
                   type="text"
                   placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   autoFocus={typeof window !== 'undefined' && window.innerWidth >= 768}
                   className="p-3 border rounded-md focus:outline-none"
                 />
                 <input
                   type="password"
                   placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="p-3 border rounded-md focus:outline-none"
                 />
+                {error && <p className=" text-sm text-center">{error}</p>}
                 <button type="submit" className="bg-yellow-500 hover:bg-orange-400 duration-150 ease-in-out text-white font-bold py-3 rounded-md cursor-pointer">
                   Login
                 </button>
