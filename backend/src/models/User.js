@@ -10,6 +10,16 @@ const getUserByUsername = async (username) => {
   }
 }
 
+const getUserByUserID = async (user_id) => {
+  try {
+    const result = await pool.query("SELECT user_id, username, dob FROM users WHERE user_id = $1", [user_id])
+    return result.rows
+  } catch (err) {
+    console.error("Error getting user:", err)
+    throw err
+  }
+}
+
 const createUser = async (username, hashedPassword, dob) => {
   try {
     const result = await pool.query(
@@ -26,5 +36,6 @@ const createUser = async (username, hashedPassword, dob) => {
 
 module.exports = {
   getUserByUsername,
+  getUserByUserID,
   createUser
 }
