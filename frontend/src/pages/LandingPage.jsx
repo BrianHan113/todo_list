@@ -4,22 +4,15 @@ import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { NotepadModel } from "../assets/models/NotepadModel.jsx";
 import Tooltip from "../components/ToolTip.jsx";
-import { useNavigate } from 'react-router-dom';
 import SignUpModal from "../components/SignUpModal.jsx"
-import { useAuth } from "../hooks/useAuth.js";
 import LoginForm from "../components/LoginForm.jsx";
-import { useState } from "react";
 
 
 const LandingPage = () => {
-  const navigate = useNavigate();
 
   const words = ["Get", "It", "Done."];
   const description = "Appointments, emails, taxes, groceries, laundry, bills, whatever. Write it down so you can get it done.";
-  const { loginUser, error } = useAuth();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
 
   useGSAP(() => {
     gsap.fromTo(
@@ -66,14 +59,7 @@ const LandingPage = () => {
               ))}
             </div>
             <div className="w-1/2 md:w-full max-w-[80%] font-bold text-white mt-10 select-none">
-              <LoginForm
-                onSubmit={() => loginUser(username, password, () => navigate("/app"))}
-                error={error}
-                username={username}
-                setUsername={setUsername}
-                password={password}
-                setPassword={setPassword}
-              />
+              <LoginForm />
             </div>
 
             <div className="hidden md:block font-bold text-white ">
