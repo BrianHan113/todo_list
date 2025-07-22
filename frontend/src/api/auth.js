@@ -14,3 +14,18 @@ export const login = async (username, password) => {
 
   return res.json();
 };
+
+export const register = async (username, password, dob) => {
+  const res = await fetch(`${BASE_URL}/auth/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password, dob }),
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error || "Register failed");
+  }
+
+  return res.json();
+};

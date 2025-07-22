@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { login } from "../api/auth";
+import { login, register } from "../api/auth";
 
 export const useAuth = () => {
   const [error, setError] = useState("");
@@ -16,6 +16,18 @@ export const useAuth = () => {
     }
   };
 
+  const registerUser = async (username, password, dob) => {
+    setError("");
+    try {
+      const { token } = await register(username, password, dob);
+      localStorage.setItem("token", token);
+      return true;
+    } catch (err) {
+      setError(err.message);
+      return false;
+    }
+  };
 
-  return { loginUser, error };
+
+  return { loginUser, registerUser, error };
 };
