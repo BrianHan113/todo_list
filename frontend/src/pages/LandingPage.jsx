@@ -22,10 +22,6 @@ const LandingPage = () => {
     );
   });
 
-  const onRegisterClick = () => {
-
-  }
-
   return (
     <section id="hero">
       <div className="flex flex-col md:flex-row fixed inset-0 bg-yellow-500 items-center justify-center">
