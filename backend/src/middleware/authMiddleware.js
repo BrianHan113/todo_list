@@ -17,13 +17,13 @@ const authMiddleware = async (req, res, next) => {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
 
     // Validate payload structure
-    if (!payload.user_id || !payload.username) {
+    if (!payload.user_id) {
       return res.status(StatusCodes.UNAUTHORIZED).json({
         error: "Invalid payload",
       });
     }
 
-    req.user = { user_id: payload.user_id, username: payload.username, dob: payload.dob };
+    req.user = { user_id: payload.user_id };
     next();
   } catch (error) {
     if (error.name === 'TokenExpiredError') {

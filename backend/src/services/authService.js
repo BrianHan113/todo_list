@@ -13,7 +13,7 @@ const register = async (username, password, dob) => {
 
   // Generate token right away for register and login functionality
   const token = jwt.sign(
-    { user_id: newUser.user_id, username: newUser.username, dob: newUser.dob },
+    { user_id: newUser.user_id },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRE || "12h" }
   );
@@ -21,9 +21,7 @@ const register = async (username, password, dob) => {
   return { // We return the payload with the same JWT for immediate use on the frontend
     token,
     user: {
-      user_id: newUser.user_id,
-      username: newUser.username,
-      dob: newUser.dob,
+      user_id: newUser.user_id
     }
   }
 };
@@ -37,7 +35,7 @@ const login = async (username, password) => {
   if (!match) throw new Error("Invalid username or password")
 
   const token = jwt.sign(
-    { user_id: user.user_id, username: user.username, dob: user.dob },
+    { user_id: user.user_id },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRE || "12h" }
   )
@@ -45,9 +43,7 @@ const login = async (username, password) => {
   return {
     token,
     user: {
-      user_id: user.user_id,
-      username: user.username,
-      dob: user.dob,
+      user_id: user.user_id
     }
   }
 };
