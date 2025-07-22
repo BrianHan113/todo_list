@@ -6,6 +6,8 @@ import { NotepadModel } from "../assets/models/NotepadModel.jsx";
 import Tooltip from "../components/ToolTip.jsx";
 import { useNavigate } from 'react-router-dom';
 import SignUpModal from "../components/SignUpModal.jsx"
+import { useAuth } from "../hooks/useAuth.js";
+import LoginForm from "../components/LoginForm.jsx";
 import { useState } from "react";
 
 
@@ -14,32 +16,10 @@ const LandingPage = () => {
 
   const words = ["Get", "It", "Done."];
   const description = "Appointments, emails, taxes, groceries, laundry, bills, whatever. Write it down so you can get it done.";
+  const { loginUser, error } = useAuth();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  const onLoginClick = async () => {
-    try {
-      const res = await fetch("http://localhost:5000/api/v1/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || "Login failed");
-      }
-
-      const { token } = await res.json();
-      localStorage.setItem("token", token);
-
-      navigate("/app");
-    } catch (err) {
-      setError(err.message);
-    }
-  };
 
   useGSAP(() => {
     gsap.fromTo(
@@ -49,7 +29,9 @@ const LandingPage = () => {
     );
   });
 
+  const onRegisterClick = () => {
 
+  }
 
   return (
     <section id="hero">
@@ -58,29 +40,20 @@ const LandingPage = () => {
         {/* LEFT: 3D model */}
         <div className="w-full h-[50vh] md:w-[65vw] md:h-[100vh]" >
           <figure className="w-full h-full">
-
             <Canvas
               className="w-full h-full"
               camera={{ position: [-7, 7, 12], fov: 0.8 }}
             >
-
               <OrbitControls
                 target={[0, -0.05, 0.005]}
                 rotateSpeed={1.5}
                 enableZoom={true}
               />
-
-
               <group rotation={[Math.PI / 2, 0, 0]}>
-
                 <NotepadModel />
-
               </group>
               <ambientLight intensity={100} />
-
-
             </Canvas>
-
           </figure>
         </div>
 
@@ -92,42 +65,26 @@ const LandingPage = () => {
                 <h1 key={i}>{word}</h1>
               ))}
             </div>
-            <div className="w-1/2 md:w-full max-w-[80%] font-bold text-white mt-10 select-none ">
-              <form className="flex flex-col space-y-4 w-full"
-                onSubmit={e => {
-                  e.preventDefault();
-                  onLoginClick();
-                }}>
-                <input
-                  type="text"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  autoFocus={typeof window !== 'undefined' && window.innerWidth >= 768}
-                  className="p-3 border rounded-md focus:outline-none"
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="p-3 border rounded-md focus:outline-none"
-                />
-                {error && <p className=" text-sm text-center">{error}</p>}
-                <button type="submit" className="bg-yellow-500 hover:bg-orange-400 duration-150 ease-in-out text-white font-bold py-3 rounded-md cursor-pointer">
-                  Login
-                </button>
-              </form>
+            <div className="w-1/2 md:w-full max-w-[80%] font-bold text-white mt-10 select-none">
+              <LoginForm
+                onSubmit={() => loginUser(username, password, () => navigate("/app"))}
+                error={error}
+                username={username}
+                setUsername={setUsername}
+                password={password}
+                setPassword={setPassword}
+              />
             </div>
+
             <div className="hidden md:block font-bold text-white ">
-              <SignUpModal onTrigger={onLoginClick} />
+              <SignUpModal onTrigger={onRegisterClick} />
               <p className="mt-2 text-sm text-center text-white select-none">
                 <Tooltip text="Get What Done?" tooltipText={description} y_translate={-350} />
               </p>
             </div>
           </div>
           <div className="block md:hidden font-bold text-white ">
-            <SignUpModal onTrigger={onLoginClick} />
+            <SignUpModal onTrigger={onRegisterClick} />
             <p className="mt-2 text-sm text-center text-white select-none">
               <Tooltip text="Get What Done?" tooltipText={description} y_translate={-350} />
             </p>

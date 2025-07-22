@@ -1,8 +1,0 @@
-Todo app - MERN + Tailwind
- - logins an acc signups, wiht google acc
- - set priority levels
- - set deadlines, "sometime in this life" option
- - add descriptions (optional)
- - view deadlines tracker
- - sort by prio, deadlines, etc
- - Age counter "You are 20.10201 Years Old"
