@@ -18,7 +18,7 @@ const getAllTasks = async (req, res) => {
 const createTask = async (req, res) => {
   try {
     const { user_id } = req.user;
-    const { title, description, position } = req.body;
+    const { title, description } = req.body;
 
     if (!title) {
       return res.status(StatusCodes.BAD_REQUEST).json({
@@ -26,12 +26,7 @@ const createTask = async (req, res) => {
       });
     }
 
-    const task = await taskModel.createTask(
-      user_id,
-      title,
-      description,
-      position
-    );
+    const task = await taskModel.createTask(user_id, title, description);
     res.status(StatusCodes.CREATED).json({ task });
   } catch (err) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

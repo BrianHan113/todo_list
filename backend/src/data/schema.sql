@@ -14,8 +14,7 @@ CREATE TABLE tasks (
   description TEXT,
   position INT NOT NULL,
   CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-  CONSTRAINT unique_user_position UNIQUE (user_id, position),
-  CHECK (position > 0)
+  CONSTRAINT unique_user_position UNIQUE (user_id, position)
 );
 
 CREATE INDEX idx_user_task ON tasks(user_id, task_id); -- for speeding up get, delete, update task for a user

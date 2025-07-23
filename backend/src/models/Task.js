@@ -26,12 +26,22 @@ const getTaskByTaskId = async (user_id, task_id) => {
   }
 }
 
-const createTask = async (user_id, title, description, position) => {
+const createTask = async (user_id, title, description) => {
   try {
+
+    const minResult = await pool.query(
+      "SELECT MIN(position) AS min_pos FROM tasks WHERE user_id = $1",
+      [user_id]
+    )
+
+    const minPos = minResult.rows[0].min_pos
+    const newPos = (minPos !== null ? minPos : 0) - 100
+
     const result = await pool.query(
       "INSERT INTO tasks (user_id, title, description, position) VALUES ($1, $2, $3, $4) RETURNING *;",
-      [user_id, title, description, position]
+      [user_id, title, description, newPos]
     )
+
     return result.rows[0]
   } catch (err) {
     console.error("Error creating task:", err)
