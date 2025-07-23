@@ -12,7 +12,7 @@ const MainApp = () => {
   const [userData, setUserData] = useState(null);
 
   const handleLogOut = () => {
-    console.log("log out")
+    localStorage.removeItem("token");
     navigate('/');
   }
 
@@ -20,6 +20,11 @@ const MainApp = () => {
     const runFetch = async () => {
       try {
         const user = await fetchUser();
+
+        if (!user) {
+          navigate('/');
+        }
+
         setUserData(user);
 
       } catch (err) {
@@ -31,8 +36,8 @@ const MainApp = () => {
   }, []);
 
   return (
-    <div className="flex flex-col w-[100vw] h-[100svh] items-center bg-amber-600" >
 
+    <div className="flex flex-col w-[100vw] h-[100svh] items-center bg-amber-600" >
       <AgeCounter user={userData} />
 
       <div className="bg-white w-[90%] md:w-[50%] px-5 rounded overflow-y-auto max-h-[75vh] md:max-h-[85vh]">
