@@ -13,7 +13,6 @@ const LandingPage = () => {
   const words = ["Get", "It", "Done."];
   const description = "Appointments, emails, taxes, groceries, laundry, bills, whatever. Write it down so you can get it done.";
 
-
   useGSAP(() => {
     gsap.fromTo(
       ".hero-text h1",
