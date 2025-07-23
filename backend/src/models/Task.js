@@ -98,11 +98,45 @@ const normalizePositions = async (user_id) => {
   }
 };
 
+const getPositionNeighbors = async (user_id, position, task_id) => {
+  try {
+    const params = [user_id, position, task_id];
+
+    const prevQuery = `
+      SELECT * FROM tasks
+      WHERE user_id = $1 AND position < $2 AND task_id != $3
+      ORDER BY position DESC
+      LIMIT 1
+    `;
+
+    const nextQuery = `
+      SELECT * FROM tasks
+      WHERE user_id = $1 AND position > $2 AND task_id != $3
+      ORDER BY position ASC
+      LIMIT 1
+    `;
+
+    const [prevResult, nextResult] = await Promise.all([
+      pool.query(prevQuery, params),
+      pool.query(nextQuery, params),
+    ]);
+
+    return {
+      prev: prevResult.rows[0] || null,
+      next: nextResult.rows[0] || null,
+    };
+  } catch (err) {
+    console.error("Error getting position neighbors:", err);
+    throw err;
+  }
+}
+
 module.exports = {
   getTasksOrderedByPosition,
   getTaskByTaskId,
   createTask,
   updateTask,
   deleteTask,
-  normalizePositions
+  normalizePositions,
+  getPositionNeighbors
 }
