@@ -78,10 +78,31 @@ const deleteTask = async (user_id, task_id) => {
   }
 }
 
+const normalizePositions = async (user_id) => {
+  try {
+    await pool.query(
+      `WITH ordered AS (
+        SELECT task_id, ROW_NUMBER() OVER (ORDER BY position ASC) AS rn
+        FROM tasks
+        WHERE user_id = $1
+      )
+      UPDATE tasks
+      SET position = ordered.rn * 100
+      FROM ordered
+      WHERE tasks.task_id = ordered.task_id;`,
+      [user_id]
+    );
+  } catch (err) {
+    console.error("Error normalizing task positions:", err);
+    throw err;
+  }
+};
+
 module.exports = {
   getTasksOrderedByPosition,
   getTaskByTaskId,
   createTask,
   updateTask,
-  deleteTask
+  deleteTask,
+  normalizePositions
 }

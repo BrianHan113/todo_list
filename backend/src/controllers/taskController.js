@@ -75,6 +75,28 @@ const updateTask = async (req, res) => {
       });
     }
 
+    // Check if we need to normalize task positions
+    if ("position" in fields) {
+      const tasks = await taskModel.getTasksOrderedByPosition(user_id);
+      let needsNormalization = false;
+
+      // This looks super inefficient since this loop runs every time a user reorders their tasks
+      // It is indeed O(n) each time
+      // BUT n is likely quite small, assuming 100 tasks, O(n) is milliseconds
+      // Won't impact UX
+      for (let i = 1; i < tasks.length; i++) {
+        const gap = Math.abs(tasks[i].position - tasks[i - 1].position);
+        if (gap <= 1) {
+          needsNormalization = true;
+          break;
+        }
+      }
+
+      if (needsNormalization) {
+        await taskModel.normalizePositions(user_id);
+      }
+    }
+
     res.status(StatusCodes.OK).json({ task: updatedTask });
   } catch (err) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
