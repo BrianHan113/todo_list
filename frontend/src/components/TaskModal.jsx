@@ -30,8 +30,8 @@ const TaskModal = ({ task, onClose, tasks, setTasks }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-40">
-      <div className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-xl space-y-6">
-        <div className="space-y-4">
+      <div className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-4xl min-h-[500px] flex flex-col">
+        <div className="flex-1 flex flex-col space-y-4">
           <input
             type="text"
             value={name}
@@ -41,11 +41,11 @@ const TaskModal = ({ task, onClose, tasks, setTasks }) => {
           <textarea
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
-            className="w-full border rounded px-3 py-2 text-gray-700 resize-none h-36 overflow-y-auto"
+            className="w-full border rounded px-3 py-2 text-gray-700 resize-none flex-1 overflow-y-auto"
           />
         </div>
 
-        <div className="flex justify-end">
+        <div className="flex justify-end pt-4">
           <button
             onClick={handleClose}
             className="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-5 py-2 rounded-lg transition cursor-pointer"
