@@ -4,17 +4,39 @@ import TaskForm from '../components/TaskForm.jsx';
 import TaskList from '../components/TaskList.jsx';
 import { useUser } from "../hooks/useUser";
 import { useState, useEffect } from 'react';
+import { useTasks } from '../hooks/useTasks.js';
 
 
 const MainApp = () => {
   const navigate = useNavigate();
-  const { fetchUser, error } = useUser();
+  const { fetchUser } = useUser();
   const [userData, setUserData] = useState(null);
+  const [tasks, setTasks] = useState([]);
+  const { getUserTasks } = useTasks();
+
 
   const handleLogOut = () => {
     localStorage.removeItem("token");
     navigate('/');
   }
+
+
+  useEffect(() => {
+    const runFetch = async () => {
+      try {
+        const userTasks = await getUserTasks();
+        if (!userTasks) {
+          navigate('/');
+          return;
+        }
+        setTasks(userTasks);
+      } catch (err) {
+        console.error("User fetch failed:", err);
+      }
+    };
+
+    runFetch();
+  }, []);
 
   useEffect(() => {
     const runFetch = async () => {
@@ -43,7 +65,7 @@ const MainApp = () => {
       <div className="bg-white w-[90%] md:w-[50%] px-5 rounded overflow-y-auto max-h-[75vh] md:max-h-[85vh]">
 
         <TaskForm />
-        <TaskList />
+        <TaskList tasks={tasks} setTasks={setTasks} />
 
       </div>
 

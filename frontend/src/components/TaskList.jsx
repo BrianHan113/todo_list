@@ -8,28 +8,11 @@ import TaskModal from './TaskModal';
 import { useTasks } from '../hooks/useTasks';
 import { arrayMove } from '@dnd-kit/sortable';
 
-const TaskList = () => {
-  const { getUserTasks, deleteATask, error } = useTasks();
-  const [tasks, setTasks] = useState([]);
+const TaskList = ({ tasks, setTasks }) => {
+  const { deleteATask, error } = useTasks();
   const [selectedTask, setSelectedTask] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const runFetch = async () => {
-      try {
-        const userTasks = await getUserTasks();
-        if (!userTasks) {
-          navigate('/');
-          return;
-        }
-        setTasks(userTasks);
-      } catch (err) {
-        console.error("User fetch failed:", err);
-      }
-    };
-
-    runFetch();
-  }, []);
 
   const openModal = (task) => {
     setSelectedTask(task);
