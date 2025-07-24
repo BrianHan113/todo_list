@@ -9,7 +9,7 @@ import { useTasks } from '../hooks/useTasks';
 import { arrayMove } from '@dnd-kit/sortable';
 
 const TaskList = () => {
-  const { getUserTasks, error } = useTasks();
+  const { getUserTasks, deleteATask, error } = useTasks();
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,8 +41,11 @@ const TaskList = () => {
     setIsModalOpen(false);
   };
 
-  const deleteTask = (task_id) => {
-    setTasks(prev => prev.filter(task => task.task_id !== task_id));
+  const deleteTask = async (task_id) => {
+    const success = await deleteATask(task_id)
+    if (success) {
+      setTasks(prev => prev.filter(task => task.task_id !== task_id));
+    }
   };
 
   const sensors = useSensors(
