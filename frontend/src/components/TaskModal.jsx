@@ -1,19 +1,32 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
+import { useTasks } from "../hooks/useTasks"
 
-const TaskModal = ({ task, onClose }) => {
+const TaskModal = ({ task, onClose, tasks, setTasks }) => {
   const [name, setName] = useState(task.title)
   const [desc, setDesc] = useState(task.description)
+  const { updateATask } = useTasks();
 
   const handleClose = () => {
-    if (name !== task.title || desc !== task.description) {
-      handleSave()
-    }
+    handleSave()
     onClose()
   }
 
-  const handleSave = () => {
-    console.log("Saved:", { name, desc })
-  }
+  const handleSave = async () => {
+    const updatedFields = {};
+    if (name !== task.title) updatedFields.title = name;
+    if (desc !== task.description) updatedFields.description = desc;
+
+    if (Object.keys(updatedFields).length === 0) return;
+
+    const updatedTask = await updateATask(task.task_id, updatedFields);
+
+    if (updatedTask != null) {
+      const updatedTasks = tasks.map(t =>
+        t.task_id === task.task_id ? updatedTask.task : t
+      );
+      setTasks(updatedTasks);
+    }
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-40">
@@ -35,9 +48,9 @@ const TaskModal = ({ task, onClose }) => {
         <div className="flex justify-end">
           <button
             onClick={handleClose}
-            className="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-5 py-2 rounded-lg transition"
+            className="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-5 py-2 rounded-lg transition cursor-pointer"
           >
-            Close
+            Save & Close
           </button>
         </div>
       </div>

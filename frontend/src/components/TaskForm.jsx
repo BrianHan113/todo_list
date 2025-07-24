@@ -10,7 +10,7 @@ const TaskForm = ({ tasks, setTasks }) => {
   const addTask = async () => {
     const { task } = await createATask(newTaskTitle, newTaskDesc);
 
-    if (task) {
+    if (task != null) {
       setTasks(prevTasks => [task, ...prevTasks]);
     }
     console.log(tasks)

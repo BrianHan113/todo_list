@@ -76,10 +76,6 @@ const TaskList = ({ tasks, setTasks }) => {
       newPosition = 0; // Should never reach here but just in case
     }
 
-    console.log("prev: ", prevPosition)
-    console.log("next: ", nextPosition)
-    console.log("curr: ", newPosition)
-
     const fields = { position: newPosition }
 
     updateATask(tasks[oldIndex].task_id, fields)
@@ -112,7 +108,7 @@ const TaskList = ({ tasks, setTasks }) => {
       </DndContext>
 
       {isModalOpen && selectedTask && (
-        <TaskModal task={selectedTask} onClose={closeModal} />
+        <TaskModal task={selectedTask} onClose={closeModal} tasks={tasks} setTasks={setTasks} />
       )}
     </>
   );
