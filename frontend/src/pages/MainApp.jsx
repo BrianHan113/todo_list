@@ -20,26 +20,8 @@ const MainApp = () => {
     navigate('/');
   }
 
-
   useEffect(() => {
-    const runFetch = async () => {
-      try {
-        const userTasks = await getUserTasks();
-        if (!userTasks) {
-          navigate('/');
-          return;
-        }
-        setTasks(userTasks);
-      } catch (err) {
-        console.error("User fetch failed:", err);
-      }
-    };
-
-    runFetch();
-  }, []);
-
-  useEffect(() => {
-    const runFetch = async () => {
+    const runUserFetch = async () => {
       try {
         const user = await fetchUser();
 
@@ -54,7 +36,21 @@ const MainApp = () => {
       }
     };
 
-    runFetch();
+    const runTasksFetch = async () => {
+      try {
+        const userTasks = await getUserTasks();
+        if (!userTasks) {
+          navigate('/');
+          return;
+        }
+        setTasks(userTasks);
+      } catch (err) {
+        console.error("Tasks fetch failed:", err);
+      }
+    };
+
+    runUserFetch();
+    runTasksFetch();
   }, []);
 
   return (
