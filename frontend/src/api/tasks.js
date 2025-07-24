@@ -35,3 +35,22 @@ export const deleteTask = async (task_id) => {
     throw new Error(err.error || "Deleting task failed");
   }
 };
+
+export const createTask = async (title, description) => {
+  const token = localStorage.getItem("token");
+  const res = await fetch(`${BASE_URL}/tasks/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({ title, description }),
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error || "Creation failed");
+  }
+
+  return res.json();
+};

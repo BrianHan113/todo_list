@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getAllTasks, deleteTask } from "../api/tasks";
+import { getAllTasks, deleteTask, createTask } from "../api/tasks";
 
 export const useTasks = () => {
   const [error, setError] = useState("");
@@ -26,6 +26,16 @@ export const useTasks = () => {
     }
   };
 
+  const createATask = async (title, description) => {
+    setError("");
+    try {
+      const task = await createTask(title, description);
+      return task;
+    } catch (err) {
+      setError(err.message);
+      return null;
+    }
+  };
 
-  return { getUserTasks, deleteATask, error };
+  return { getUserTasks, deleteATask, createATask, error };
 };

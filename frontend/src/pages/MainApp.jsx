@@ -60,7 +60,7 @@ const MainApp = () => {
 
       <div className="bg-white w-[90%] md:w-[50%] px-5 rounded overflow-y-auto max-h-[75vh] md:max-h-[85vh]">
 
-        <TaskForm />
+        <TaskForm tasks={tasks} setTasks={setTasks} />
         <TaskList tasks={tasks} setTasks={setTasks} />
 
       </div>
