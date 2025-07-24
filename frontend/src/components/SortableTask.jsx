@@ -29,9 +29,9 @@ const SortableTask = ({ id, task, onDelete, onClick }) => {
         </span>
         <span
           className="font-semibold flex-1 h-full"
-          
+
         >
-          {task.name}
+          {task.title}
         </span>
         <button
           onClick={(e) => {

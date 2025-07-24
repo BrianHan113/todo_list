@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react"
 
 const TaskModal = ({ task, onClose }) => {
-  const [name, setName] = useState(task.name)
-  const [desc, setDesc] = useState(task.desc)
+  const [name, setName] = useState(task.title)
+  const [desc, setDesc] = useState(task.description)
 
-	const handleClose = () => {
-		if (name !== task.name || desc !== task.desc) {
-			handleSave()
-		}
-		onClose()
-}
+  const handleClose = () => {
+    if (name !== task.title || desc !== task.description) {
+      handleSave()
+    }
+    onClose()
+  }
 
   const handleSave = () => {
     console.log("Saved:", { name, desc })
@@ -34,11 +34,11 @@ const TaskModal = ({ task, onClose }) => {
 
         <div className="flex justify-end">
           <button
-						onClick={handleClose}
-						className="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-5 py-2 rounded-lg transition"
-					>
-						Close
-					</button>
+            onClick={handleClose}
+            className="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-5 py-2 rounded-lg transition"
+          >
+            Close
+          </button>
         </div>
       </div>
     </div>

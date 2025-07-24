@@ -3,52 +3,64 @@ import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers';
 import SortableTask from './SortableTask';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TaskModal from './TaskModal';
+import { useTasks } from '../hooks/useTasks';
+import { arrayMove } from '@dnd-kit/sortable';
 
 const TaskList = () => {
+  const { getUserTasks, error } = useTasks();
+  const [tasks, setTasks] = useState([]);
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [tasks, setTasks] = useState([
-    { name: "FIRST", desc: "first desc" },
-    { name: "dummy1", desc: "testing" },
-    { name: "dummy2", desc: "testing" },
-    { name: "dummy3", desc: "testing" },
-    { name: "dummy4", desc: "testing" },
-    { name: "LAST", desc: "last desc" }
-  ]);
+  useEffect(() => {
+    const runFetch = async () => {
+      try {
+        const userTasks = await getUserTasks();
+        if (!userTasks) {
+          navigate('/');
+          return;
+        }
+        setTasks(userTasks);
+      } catch (err) {
+        console.error("User fetch failed:", err);
+      }
+    };
 
-  const [selectedTask, setSelectedTask] = useState(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
+    runFetch();
+  }, []);
 
   const openModal = (task) => {
-    setSelectedTask(task)
-    setIsModalOpen(true)
-    console.log(task.name)
-    console.log(task.desc)
-  }
-  const deleteTask = (index) => {
-    setTasks(t => t.filter((_, i) => i !== index));
-  }
+    setSelectedTask(task);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedTask(null);
+    setIsModalOpen(false);
+  };
+
+  const deleteTask = (task_id) => {
+    setTasks(prev => prev.filter(task => task.task_id !== task_id));
+  };
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
     useSensor(TouchSensor, { activationConstraint: { delay: 150, tolerance: 5 } })
   );
 
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
-    if (active && over && active.id !== over.id) {
-      const oldIndex = tasks.findIndex((_, i) => i === active.id);
-      const newIndex = tasks.findIndex((_, i) => i === over.id);
+  const handleDragEnd = ({ active, over }) => {
+    if (!active || !over || active.id === over.id) return;
+
+    const oldIndex = tasks.findIndex(task => task.task_id === active.id);
+    const newIndex = tasks.findIndex(task => task.task_id === over.id);
+
+    if (oldIndex !== -1 && newIndex !== -1) {
+      const reordered = arrayMove(tasks, oldIndex, newIndex);
+      setTasks(reordered);
     }
   };
-
-  const closeModal = () => {
-    setSelectedTask(null)
-    setIsModalOpen(false)
-    console.log("close")
-  }
 
   return (
     <>
@@ -58,20 +70,24 @@ const TaskList = () => {
         onDragEnd={handleDragEnd}
         modifiers={[restrictToVerticalAxis, restrictToParentElement]}
       >
-        <SortableContext items={tasks.map((_, i) => i)} strategy={verticalListSortingStrategy}>
+        <SortableContext
+          items={tasks.map(task => task.task_id)}
+          strategy={verticalListSortingStrategy}
+        >
           <ol className="space-y-2 pb-2">
-            {tasks.map((task, index) => (
+            {tasks.map(task => (
               <SortableTask
-                key={index}
-                id={index}
+                key={task.task_id}
+                id={task.task_id}
                 task={task}
-                onDelete={() => deleteTask(index)}
+                onDelete={() => deleteTask(task.task_id)}
                 onClick={() => openModal(task)}
               />
             ))}
           </ol>
         </SortableContext>
       </DndContext>
+
       {isModalOpen && selectedTask && (
         <TaskModal task={selectedTask} onClose={closeModal} />
       )}
