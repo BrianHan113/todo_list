@@ -9,7 +9,7 @@ import { useTasks } from '../hooks/useTasks';
 import { arrayMove } from '@dnd-kit/sortable';
 
 const TaskList = ({ tasks, setTasks }) => {
-  const { deleteATask, error } = useTasks();
+  const { deleteATask, getATask, updateATask, error } = useTasks();
   const [selectedTask, setSelectedTask] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -36,16 +36,53 @@ const TaskList = ({ tasks, setTasks }) => {
     useSensor(TouchSensor, { activationConstraint: { delay: 150, tolerance: 5 } })
   );
 
-  const handleDragEnd = ({ active, over }) => {
+  const handleDragEnd = async ({ active, over }) => {
     if (!active || !over || active.id === over.id) return;
 
     const oldIndex = tasks.findIndex(task => task.task_id === active.id);
     const newIndex = tasks.findIndex(task => task.task_id === over.id);
 
+    // console.log(tasks[newIndex]);
+    let reordered
     if (oldIndex !== -1 && newIndex !== -1) {
-      const reordered = arrayMove(tasks, oldIndex, newIndex);
+      reordered = arrayMove(tasks, oldIndex, newIndex);
       setTasks(reordered);
     }
+
+    const prevTask = reordered[newIndex - 1] || null;
+    const nextTask = reordered[newIndex + 1] || null;
+
+    let prevPosition = null;
+    let nextPosition = null;
+
+    if (prevTask) {
+      const realPrevTask = await getATask(prevTask.task_id)
+      prevPosition = realPrevTask.position
+    }
+
+    if (nextTask) {
+      const realNextTask = await getATask(nextTask.task_id)
+      nextPosition = realNextTask.position
+    }
+
+    let newPosition;
+    if (prevPosition != null && nextPosition != null) {
+      newPosition = Math.round((prevPosition + nextPosition) / 2);
+    } else if (prevPosition != null) {
+      newPosition = prevPosition + 100;
+    } else if (nextPosition != null) {
+      newPosition = nextPosition - 100;
+    } else {
+      newPosition = 0; // Should never reach here but just in case
+    }
+
+    console.log("prev: ", prevPosition)
+    console.log("next: ", nextPosition)
+    console.log("curr: ", newPosition)
+
+    const fields = { position: newPosition }
+
+    updateATask(tasks[oldIndex].task_id, fields)
   };
 
   return (

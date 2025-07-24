@@ -54,3 +54,41 @@ export const createTask = async (title, description) => {
 
   return res.json();
 };
+
+export const getTask = async (task_id) => {
+  const token = localStorage.getItem("token");
+  const res = await fetch(`${BASE_URL}/tasks/${task_id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    }
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error || "Fetch task failed");
+  }
+
+  return res.json();
+};
+
+
+export const updateTask = async (task_id, fields) => {
+  const token = localStorage.getItem("token");
+  const res = await fetch(`${BASE_URL}/tasks/${task_id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify(fields),
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error || "Update failed");
+  }
+
+  return res.json();
+};
