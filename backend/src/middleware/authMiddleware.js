@@ -1,22 +1,18 @@
 const jwt = require('jsonwebtoken');
-const { StatusCodes } = require("http-status-codes")
+const { StatusCodes } = require("http-status-codes");
 
+const authMiddleware = (req, res, next) => {
+  const token = req.cookies?.token;
 
-const authMiddleware = async (req, res, next) => {
-  const authHeader = req.headers.authorization;
-
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  if (!token) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       error: "No Token",
     });
   }
 
-  const token = authHeader.trim().split(' ')[1];
-
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Validate payload structure
     if (!payload.user_id) {
       return res.status(StatusCodes.UNAUTHORIZED).json({
         error: "Invalid payload",

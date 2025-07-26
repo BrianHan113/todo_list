@@ -10,6 +10,7 @@ const authRouter = require('./routes/authRoutes')
 const authMiddleware = require('./middleware/authMiddleware')
 const tasksRouter = require('./routes/taskRoutes')
 const userRouter = require('./routes/userRoutes')
+const cookieParser = require('cookie-parser');
 
 const app = express()
 const port = process.env.PORT || 5000
@@ -22,6 +23,7 @@ app.use(rateLimiter({
   max: 100,
 }))
 
+app.use(cookieParser());
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/tasks', authMiddleware, tasksRouter)
 app.use('/api/v1/user', authMiddleware, userRouter)
