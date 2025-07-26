@@ -15,6 +15,8 @@ const MainApp = () => {
   const [userData, setUserData] = useState(null);
   const [tasks, setTasks] = useState([]);
   const { getUserTasks } = useTasks();
+  const [loadingUser, setLoadingUser] = useState(true);
+  const [loadingTasks, setLoadingTasks] = useState(true);
 
 
   const handleLogOut = () => {
@@ -26,34 +28,50 @@ const MainApp = () => {
     const runUserFetch = async () => {
       try {
         const user = await fetchUser();
-
+        console.log("Fetched user:", user);
         if (!user) {
+          console.log("No user, redirecting to login");
           navigate('/');
+          return;
         }
-
         setUserData(user);
-
       } catch (err) {
         console.log("User fetch failed:", err);
+        navigate('/');
+      } finally {
+        setLoadingUser(false);
       }
     };
 
     const runTasksFetch = async () => {
       try {
         const userTasks = await getUserTasks();
+        console.log("Fetched tasks:", userTasks);
         if (!userTasks) {
+          console.log("No tasks, redirecting to login");
           navigate('/');
           return;
         }
         setTasks(userTasks);
       } catch (err) {
-        console.error("Tasks fetch failed:", err);
+        console.log("Tasks fetch failed:", err);
+        navigate('/');
+      } finally {
+        setLoadingTasks(false);
       }
     };
 
     runUserFetch();
     runTasksFetch();
   }, []);
+
+  if (loadingUser || loadingTasks) {
+    return <div>Loading...</div>;
+  }
+
+  if (!userData || !tasks) {
+    navigate('/');
+  }
 
   return (
 
