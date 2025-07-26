@@ -31,6 +31,8 @@ const LandingPage = () => {
             <Canvas
               className="w-full h-full"
               camera={{ position: [-7, 7, 12], fov: 0.8 }}
+              onDragStart={(e) => e.preventDefault()}
+              draggable={false}
             >
               <OrbitControls
                 target={[0, -0.05, 0.005]}
