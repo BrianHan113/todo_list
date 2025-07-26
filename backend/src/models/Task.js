@@ -50,7 +50,8 @@ const createTask = async (user_id, title, description) => {
 }
 
 const updateTask = async (user_id, task_id, fields) => {
-  const keys = Object.keys(fields)
+  const allowedKeys = ['title', 'description', 'position'];
+  const keys = Object.keys(fields).filter(k => allowedKeys.includes(k));
   const values = Object.values(fields)
   const setClause = keys.map((key, i) => `${key} = $${i + 1}`).join(', ')
   try {

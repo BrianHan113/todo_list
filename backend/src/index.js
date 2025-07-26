@@ -15,6 +15,7 @@ const cookieParser = require('cookie-parser');
 const app = express()
 const port = process.env.PORT || 5000
 
+express.json({ limit: '1mb' })
 app.use(express.json())
 app.use(cors({
   origin: process.env.FRONTEND,
