@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { NotepadModel } from "../assets/models/NotepadModel.jsx";
-import Tooltip from "../components/ToolTip.jsx";
+import ToolTip from "../components/ToolTip.jsx";
 import SignUpModal from "../components/SignUpModal.jsx"
 import LoginForm from "../components/LoginForm.jsx";
 
@@ -62,14 +62,14 @@ const LandingPage = () => {
             <div className="hidden md:block font-bold text-white ">
               <SignUpModal />
               <p className="mt-2 text-sm text-center text-white select-none">
-                <Tooltip text="Get What Done?" tooltipText={description} y_translate={-350} />
+                <ToolTip text="Get What Done?" tooltipText={description} y_translate={-350} />
               </p>
             </div>
           </div>
           <div className="block md:hidden font-bold text-white ">
             <SignUpModal />
             <p className="mt-2 text-sm text-center text-white select-none">
-              <Tooltip text="Get What Done?" tooltipText={description} y_translate={-350} />
+              <ToolTip text="Get What Done?" tooltipText={description} y_translate={-350} />
             </p>
           </div>
         </div>

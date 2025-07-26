@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-const Tooltip = ({ text, tooltipText, y_translate }) => {
+const ToolTip = ({ text, tooltipText, y_translate }) => {
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
   const tooltipRef = useRef(null);
@@ -43,4 +43,4 @@ const Tooltip = ({ text, tooltipText, y_translate }) => {
   );
 };
 
-export default Tooltip;
+export default ToolTip;
