@@ -14,9 +14,9 @@ const register = async (username, password, dob) => {
 };
 
 const login = async (username, password) => {
-  const user = await userModel.getUserByUsername(username);
-  if (user.length === 0) throw new Error("Invalid username or password");
-
+  const users = await userModel.getUserByUsername(username);
+  if (users.length === 0) throw new Error("Invalid username or password");
+  const user = users[0]
   const match = await bcrypt.compare(password, user.password);
   if (!match) throw new Error("Invalid username or password");
 
