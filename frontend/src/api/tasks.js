@@ -1,13 +1,11 @@
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 export const getAllTasks = async () => {
-  const token = localStorage.getItem("token");
-
   const res = await fetch(`${BASE_URL}/tasks/`, {
     method: "GET",
+    credentials: "include",
     headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+      "Content-Type": "application/json"
     }
   });
 
@@ -20,13 +18,11 @@ export const getAllTasks = async () => {
 };
 
 export const deleteTask = async (task_id) => {
-  const token = localStorage.getItem("token");
-
   const res = await fetch(`${BASE_URL}/tasks/${task_id}/`, {
     method: "DELETE",
+    credentials: "include",
     headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+      "Content-Type": "application/json"
     }
   });
 
@@ -37,12 +33,11 @@ export const deleteTask = async (task_id) => {
 };
 
 export const createTask = async (title, description) => {
-  const token = localStorage.getItem("token");
   const res = await fetch(`${BASE_URL}/tasks/`, {
     method: "POST",
+    credentials: "include",
     headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+      "Content-Type": "application/json"
     },
     body: JSON.stringify({ title, description }),
   });
@@ -56,12 +51,11 @@ export const createTask = async (title, description) => {
 };
 
 export const getTask = async (task_id) => {
-  const token = localStorage.getItem("token");
   const res = await fetch(`${BASE_URL}/tasks/${task_id}`, {
     method: "GET",
+    credentials: "include",
     headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+      "Content-Type": "application/json"
     }
   });
 
@@ -73,14 +67,12 @@ export const getTask = async (task_id) => {
   return res.json();
 };
 
-
 export const updateTask = async (task_id, fields) => {
-  const token = localStorage.getItem("token");
   const res = await fetch(`${BASE_URL}/tasks/${task_id}`, {
     method: "PATCH",
+    credentials: "include",
     headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+      "Content-Type": "application/json"
     },
     body: JSON.stringify(fields),
   });

@@ -7,8 +7,7 @@ export const useAuth = () => {
   const loginUser = async (username, password) => {
     setError("");
     try {
-      const { token } = await login(username, password);
-      localStorage.setItem("token", token);
+      await login(username, password);
       return true;
     } catch (err) {
       setError(err.message);
@@ -19,8 +18,7 @@ export const useAuth = () => {
   const registerUser = async (username, password, dob) => {
     setError("");
     try {
-      const { token } = await register(username, password, dob);
-      localStorage.setItem("token", token);
+      await register(username, password, dob);
       return true;
     } catch (err) {
       setError(err.message);
@@ -28,6 +26,12 @@ export const useAuth = () => {
     }
   };
 
+  const logout = async () => {
+    await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
+      method: "POST",
+      credentials: "include",
+    });
+  };
 
-  return { loginUser, registerUser, error };
+  return { loginUser, registerUser, logout, error };
 };

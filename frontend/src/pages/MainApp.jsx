@@ -5,18 +5,20 @@ import TaskList from '../components/TaskList.jsx';
 import { useUser } from "../hooks/useUser";
 import { useState, useEffect } from 'react';
 import { useTasks } from '../hooks/useTasks.js';
+import { useAuth } from '../hooks/useAuth.js';
 
 
 const MainApp = () => {
   const navigate = useNavigate();
   const { fetchUser } = useUser();
+  const { logout } = useAuth();
   const [userData, setUserData] = useState(null);
   const [tasks, setTasks] = useState([]);
   const { getUserTasks } = useTasks();
 
 
   const handleLogOut = () => {
-    localStorage.removeItem("token");
+    logout();
     navigate('/');
   }
 
