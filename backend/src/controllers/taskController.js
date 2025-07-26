@@ -1,5 +1,6 @@
 const { StatusCodes } = require("http-status-codes")
 const taskModel = require("../models/Task")
+const { createTaskSchema, updateTaskSchema } = require("../validators/taskValidator");
 
 // No taskService as it would just be a middleman, no added business logic for this simple functionality.
 
@@ -16,6 +17,11 @@ const getAllTasks = async (req, res) => {
 };
 
 const createTask = async (req, res) => {
+  const { error } = createTaskSchema.validate(req.body);
+  if (error) {
+    return res.status(StatusCodes.BAD_REQUEST).json({ error: error.details[0].message });
+  }
+
   try {
     const { user_id } = req.user;
     const { title, description } = req.body;
@@ -56,6 +62,11 @@ const getTask = async (req, res) => {
 };
 
 const updateTask = async (req, res) => {
+  const { error } = updateTaskSchema.validate(req.body);
+  if (error) {
+    return res.status(StatusCodes.BAD_REQUEST).json({ error: error.details[0].message });
+  }
+
   try {
     const { id: task_id } = req.params;
     const { user_id } = req.user;
