@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const authService = require("../services/authService");
 const jwt = require("jsonwebtoken");
+const { registerSchema, loginSchema } = require("../validators/authValidator");
 
 const createCookie = (res, token) => {
 	res.cookie("token", token, {
@@ -12,6 +13,12 @@ const createCookie = (res, token) => {
 };
 
 const register = async (req, res) => {
+
+	const { error } = registerSchema.validate(req.body);
+	if (error) {
+		return res.status(StatusCodes.BAD_REQUEST).json({ error: error.details[0].message });
+	}
+
 	try {
 		const { username, password, dob } = req.body;
 		const user = await authService.register(username, password, dob);
@@ -30,6 +37,10 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
+	const { error } = loginSchema.validate(req.body);
+	if (error) {
+		return res.status(StatusCodes.BAD_REQUEST).json({ error: error.details[0].message });
+	}
 	try {
 		const { username, password } = req.body;
 		const user = await authService.login(username, password);

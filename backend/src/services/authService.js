@@ -4,9 +4,6 @@ const userModel = require('../models/User')
 const register = async (username, password, dob) => {
   const existingUsers = await userModel.getUserByUsername(username);
   if (existingUsers.length > 0) throw new Error('Username already taken');
-  if (username.length === 0) throw new Error("Invalid Username");
-  if (password.length < 5) throw new Error("Password must be 5+ characters");
-  if (dob.length === 0) throw new Error("Invalid date of birth");
   const hashedPassword = await bcrypt.hash(password, 12);
   const newUser = await userModel.createUser(username, hashedPassword, dob);
 
